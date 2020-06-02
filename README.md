@@ -53,11 +53,11 @@ So, I left only the labels that i thought were necessary for the automatic speec
 |2|\<pad\>|0|  
 |3| |5774462|   
 |4|.|640924|   
-|5|그|556373|   
-|6|이|509291|   
+|5|그|556373|     
 |.|.|.|  
 |.|.|.|     
-|2337|6|2|  
+|2336|뷁|1|      
+|2337|꺟|1|  
   
 ### Create id transcript
   
