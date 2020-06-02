@@ -12,18 +12,18 @@ This repository provides **filtering transcript**, **create character labels**, 
 For detail, I explain in the `Pre-process` part below.         
   
 `KsponSpeech corpus` is a **1000h** Korean speech data corpus provided by [AI Hub](http://www.aihub.or.kr/) in Korea.   
-Anyone can download this dataset just by applying.  
-The transcription rules can see [here](http://www.aihub.or.kr/sites/default/files/2019-12/%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%9D%8C%EC%84%B1%20%EC%A0%84%EC%82%AC%EA%B7%9C%EC%B9%99%20v1.0.pdf).  
+Anyone can download this dataset just by applying. The transcription rules can see [here](http://www.aihub.or.kr/sites/default/files/2019-12/%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%9D%8C%EC%84%B1%20%EC%A0%84%EC%82%AC%EA%B7%9C%EC%B9%99%20v1.0.pdf).  
   
 ## Pre-process
   
-The text for provided by the AI Hub is as follows.  
-(Spell transcription) / (Pronunciation transcription), noise, groping, etc.. are labeled in detail.   
 I pre-process for a `Speech Recognition` task.   
 So, I left only the labels that i thought were necessary for the automatic speech recognition system (ASR).   
    
 ### Filtering transcript
-
+  
+The text for provided by the AI Hub is as follows.  
+(**Spell transcription**) / (**Pronunciation transcription**), **noise**, **groping**, etc.. are labeled in detail.   
+  
 * Raw data
 ```
 "b/ 아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니 n/" 
@@ -46,6 +46,8 @@ So, I left only the labels that i thought were necessary for the automatic speec
   
 ### Create character labels
   
+Create character label file as csv format.  
+  
 |id|char|freq|  
 |:--:|:----:|:----:|   
 |0|\<sos\>|0|   
@@ -53,13 +55,15 @@ So, I left only the labels that i thought were necessary for the automatic speec
 |2|\<pad\>|0|  
 |3| |5774462|   
 |4|.|640924|   
-|5|그|556373|   
-|6|이|509291|   
+|5|그|556373|     
 |.|.|.|  
 |.|.|.|     
-|2337|6|2|  
+|2336|뷁|1|      
+|2337|꺟|1|  
   
 ### Create id transcript
+  
+Create id transcript according to character label csv file.  
   
 * Before
 ```
@@ -83,7 +87,7 @@ $ python main.py --datasetpath your_path --script_prefix KsponScript_
   
 * run.sh
   
-Set the dataset path in run.sh
+Set the dataset path in [run.sh](https://github.com/sooftware/KsponSpeech.preprocess/blob/master/run.sh)
 ```
 DATASET_PATH=''                   # SET YOUR KsponSpeech corpus PATH
 SCRIPT_PREFIX='KsponScript_'      # IF YOU WANT, CHANGE AS CUSTOM.
