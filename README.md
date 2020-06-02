@@ -87,7 +87,7 @@ $ python main.py --datasetpath your_path --script_prefix KsponScript_
   
 * run.sh
   
-Set the dataset path in run.sh
+Set the dataset path in [run.sh](https://github.com/sooftware/KsponSpeech.preprocess/blob/master/run.sh)
 ```
 DATASET_PATH=''                   # SET YOUR KsponSpeech corpus PATH
 SCRIPT_PREFIX='KsponScript_'      # IF YOU WANT, CHANGE AS CUSTOM.
