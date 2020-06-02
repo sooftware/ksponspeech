@@ -16,13 +16,14 @@ Anyone can download this dataset just by applying. The transcription rules can s
   
 ## Pre-process
   
-The text for provided by the AI Hub is as follows.  
-(**Spell transcription**) / (**Pronunciation transcription**), noise, groping, etc.. are labeled in detail.   
 I pre-process for a `Speech Recognition` task.   
 So, I left only the labels that i thought were necessary for the automatic speech recognition system (ASR).   
    
 ### Filtering transcript
-
+  
+The text for provided by the AI Hub is as follows.  
+(**Spell transcription**) / (**Pronunciation transcription**), **noise**, **groping**, etc.. are labeled in detail.   
+  
 * Raw data
 ```
 "b/ 아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니 n/" 
