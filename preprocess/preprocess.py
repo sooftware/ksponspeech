@@ -66,11 +66,12 @@ def create_script(dataset_path, script_prefix):
     for directory in os.listdir(dataset_path):
         path = os.path.join(dataset_path, directory)
         for file in os.listdir(path):
-            sentence, target = None, None
+            if file.endswith('.txt'):
+                sentence, target = None, None
 
-            with open(os.path.join(path, file), "r") as f:
-                sentence = f.read()
+                with open(os.path.join(path, file), "r") as f:
+                    sentence = f.read()
 
-            with open(os.path.join(path, script_prefix + file[12:]), "w") as f:
-                target = sentence_to_target(sentence, char2id)
-                f.write(target)
+                with open(os.path.join(path, script_prefix + file[12:]), "w") as f:
+                    target = sentence_to_target(sentence, char2id)
+                    f.write(target)
