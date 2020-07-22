@@ -79,7 +79,7 @@ Create id transcript according to character label csv file.
   
 ### Method 1: Run `main.py`  
 ```
-$ python main.py --datasetpath your_path --script_prefix KsponScript_
+$ python main.py --datasetpath your_path --new_path new_path --script_prefix KsponScript_
 ```  
 
 ### Method 2: Run `run.sh`  
@@ -90,10 +90,11 @@ $ python main.py --datasetpath your_path --script_prefix KsponScript_
 Set the dataset path in [run.sh](https://github.com/sooftware/KsponSpeech.preprocess/blob/master/run.sh)
 ```
 DATASET_PATH=''                   # SET YOUR KsponSpeech corpus PATH
+NEW_PATH=''                       # SET YOUR path to store preprocessed KsponSpeech corpus
 SCRIPT_PREFIX='KsponScript_'      # IF YOU WANT, CHANGE AS CUSTOM.
 
 
-python main.py -dataset_path $DATASET_PATH -script_prefix $SCRIPT_PREFIX
+python main.py --dataset_path $DATASET_PATH --new_path $NEW_PATH --script_prefix $SCRIPT_PREFIX
 ```  
   
 Run run.sh
