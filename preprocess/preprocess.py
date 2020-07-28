@@ -1,10 +1,26 @@
 import os
 import pandas as pd
 import shutil
-from preprocess.functional import sentence_filter, load_label, sentence_to_target
+from preprocess.functional import sentence_filter, load_label, sentence_to_target, percent_process
 
 
-def preprocess(dataset_path, mode):
+def preprocess(dataset_path, mode, filenum_adjust):
+    # files which has "%" in their sentence
+    percent_files = ['087797', '215401', '284574', '397184', '501006', '502173', '542363', '581483']
+
+    # adjust file number; maybe one file has deleted in this case, so filenums should reduced by 1.
+    adjust_val = [0, -1, -1, -1, -1, -1, -1, -1]
+
+    # True for "퍼센트", False for "프로"
+    milestone = [True, True, True, True, False, False, False, True]
+
+    if filenum_adjust:
+        for idx in range(len(percent_files)):
+            percent_files[idx] = str(int(percent_files[idx]) + adjust_val[idx])
+            if len(percent_files[idx]) < 6:
+                percent_files[idx] = "0" * (6 - len(percent_files[idx])) + percent_files[idx]
+
+
     print('preprocess started..')
 
     for folder in os.listdir(dataset_path):
@@ -19,7 +35,14 @@ def preprocess(dataset_path, mode):
                         raw_sentence = f.read()
                         new_sentence = sentence_filter(raw_sentence, mode)
 
+                    # handle "%" to "퍼센트" or "프로"
                     with open(os.path.join(path, file), "w") as f:
+                        filenum = file[-10:-4]
+                        if filenum in percent_files:
+                            if milestone[percent_files.index(filenum)]:
+                                percent_process(new_sentence, 'long')
+                            else:
+                                percent_process(new_sentence, 'short')
                         f.write(new_sentence)
 
                 else:
