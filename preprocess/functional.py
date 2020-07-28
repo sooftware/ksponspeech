@@ -16,19 +16,38 @@ def load_label(filepath):
     return char2id, id2char
 
 
-def bracket_filter(sentence):
+def bracket_filter(sentence, mode):
     new_sentence = str()
-    flag = False
 
-    for ch in sentence:
-        if ch == '(' and flag is False:
-            flag = True
-            continue
-        if ch == '(' and flag is True:
-            flag = False
-            continue
-        if ch != ')' and flag is False:
-            new_sentence += ch
+    if mode == 'phonetic':
+        flag = False
+
+        for ch in sentence:
+            if ch == '(' and flag is False:
+                flag = True
+                continue
+            if ch == '(' and flag is True:
+                flag = False
+                continue
+            if ch != ')' and flag is False:
+                new_sentence += ch
+
+    elif mode == 'numeric':
+        update = True
+
+        for ch in sentence:
+            if ch == '(':
+                continue
+            if ch == ')':
+                if update is True:
+                    update = False
+                    continue
+                else:
+                    update = True
+                    continue
+            if ch != ')' and update is True:
+                new_sentence += ch
+
     return new_sentence
 
 
@@ -46,6 +65,8 @@ def special_filter(sentence):
 
         if ch == '#':
             new_sentence += '샾'
+        if ch == '%':
+            new_sentence += '퍼센트'
 
         elif ch not in EXCEPT:
             new_sentence += ch
@@ -55,8 +76,8 @@ def special_filter(sentence):
     return new_sentence
 
 
-def sentence_filter(raw_sentence):
-    return special_filter(bracket_filter(raw_sentence))
+def sentence_filter(raw_sentence, mode):
+    return special_filter(bracket_filter(raw_sentence, mode))
 
 
 def sentence_to_target(sentence, char2id):

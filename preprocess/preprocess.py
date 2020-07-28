@@ -4,7 +4,7 @@ import shutil
 from preprocess.functional import sentence_filter, load_label, sentence_to_target
 
 
-def preprocess(dataset_path):
+def preprocess(dataset_path, mode):
     print('preprocess started..')
 
     for folder in os.listdir(dataset_path):
@@ -17,7 +17,7 @@ def preprocess(dataset_path):
 
                     with open(os.path.join(path, file), "r") as f:
                         raw_sentence = f.read()
-                        new_sentence = sentence_filter(raw_sentence)
+                        new_sentence = sentence_filter(raw_sentence, mode)
 
                     with open(os.path.join(path, file), "w") as f:
                         f.write(new_sentence)

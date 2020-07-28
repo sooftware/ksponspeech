@@ -16,9 +16,11 @@ if __name__ == '__main__':
     parser.add_argument('--dataset_path', type=str, default='SET YOUR KsponSpeech corpus PATH')
     parser.add_argument('--new_path', type=str, default='SET YOUR path to store preprocessed KsponSpeech corpus')
     parser.add_argument('--script_prefix', type=str, default='KsponScript_', help='default: KsponScript_FILENUM.txt')
+    parser.add_argument('--mode', type=str, default='phonetic',
+                        help='default: phonetic(6->"육"), optional: numeric(6->"6")')
     opt = parser.parse_args()
 
-    preprocess(opt.dataset_path)
+    preprocess(opt.dataset_path, opt.mode)
     create_char_labels(opt.dataset_path)
     create_script(opt.dataset_path, opt.script_prefix)
     gather_files(opt.dataset_path, opt.new_path, opt.script_prefix)
