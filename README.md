@@ -34,9 +34,14 @@ The text for provided by the AI Hub is as follows.
 "아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니"
 ```
   
-* Use pronunciation transcription
+* Option1 : phonetic
 ```
 "아/ 모+ 몬 소리야 칠 십 퍼센트 확률이라니"
+```
+
+* Option2 : numeric
+```
+"아/ 모+ 몬 소리야 70% 확률이라니"
 ```
   
 * Delete labels such as '/', '*', '+', etc. (used for gantour representation)
