@@ -65,8 +65,6 @@ def special_filter(sentence):
 
         if ch == '#':
             new_sentence += '샾'
-        if ch == '%':
-            new_sentence += '퍼센트'
 
         elif ch not in EXCEPT:
             new_sentence += ch
@@ -87,3 +85,9 @@ def sentence_to_target(sentence, char2id):
         target += (str(char2id[ch]) + ' ')
 
     return target[:-1]
+
+def percent_process(sentence, option):
+    if option == 'short':
+        return sentence.replace("%", "프로")
+    elif option == 'long':
+        return sentence.replace("%", "퍼센트")
