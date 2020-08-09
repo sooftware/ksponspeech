@@ -4,7 +4,7 @@ import shutil
 from preprocess.functional import sentence_filter, load_label, sentence_to_target, percent_process
 
 
-def preprocess(dataset_path, mode, filenum_adjust):
+def preprocess(dataset_path, new_path, mode, filenum_adjust):
     # files which has "%" in their sentence
     percent_files = ['087797', '215401', '284574', '397184', '501006', '502173', '542363', '581483']
 
@@ -23,55 +23,50 @@ def preprocess(dataset_path, mode, filenum_adjust):
 
     print('preprocess started..')
 
-    for folder in os.listdir(dataset_path):
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        for subfolder in os.listdir(folder):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.txt'):
-                    new_sentence = str()
+    for file in os.listdir(dataset_path):
+        if "Script" in file: continue
+        if file.endswith('.txt'):
+            new_sentence = str()
 
-                    with open(os.path.join(path, file), "r") as f:
-                        raw_sentence = f.read()
-                        new_sentence = sentence_filter(raw_sentence, mode)
+            with open(os.path.join(dataset_path, file), "r") as f:
+                raw_sentence = f.read()
+                new_sentence = sentence_filter(raw_sentence, mode)
 
-                    # handle "%" to "퍼센트" or "프로"
-                    with open(os.path.join(path, file), "w") as f:
-                        filenum = file[-10:-4]
-                        if filenum in percent_files:
-                            if milestone[percent_files.index(filenum)]:
-                                percent_process(new_sentence, 'long')
-                            else:
-                                percent_process(new_sentence, 'short')
-                        f.write(new_sentence)
+                # handle "%" to "퍼센트" or "프로"
+                filenum = file[-10:-4]
+                if filenum in percent_files:
+                    if milestone[percent_files.index(filenum)]:
+                        percent_process(new_sentence, 'long')
+                    else:
+                        percent_process(new_sentence, 'short')
 
-                else:
-                    continue
+            with open(os.path.join(new_path, file), "w") as f:
+                f.write(new_sentence)
+
+        else:
+            continue
 
 
-def create_char_labels(dataset_path):
+def create_char_labels(dataset_path, label_dest):
     print('create_char_labels started..')
 
     label_list = list()
     label_freq = list()
 
-    for folder in os.listdir(dataset_path):
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        for subfolder in os.listdir(folder):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('txt'):
-                    with open(os.path.join(path, file), "r") as f:
-                        sentence = f.read()
+    for file in os.listdir(dataset_path):
+        if "Script" in file: continue
+        if file.endswith('txt'):
+            with open(os.path.join(dataset_path, file), "r") as f:
+                sentence = f.read()
 
-                        for ch in sentence:
-                            if ch not in label_list:
-                                label_list.append(ch)
-                                label_freq.append(1)
-                            else:
-                                label_freq[label_list.index(ch)] += 1
-                else:
-                    continue
+                for ch in sentence:
+                    if ch not in label_list:
+                        label_list.append(ch)
+                        label_freq.append(1)
+                    else:
+                        label_freq[label_list.index(ch)] += 1
+        else:
+            continue
 
     # sort together Using zip
     label_freq, label_list = zip(*sorted(zip(label_freq, label_list), reverse=True))
@@ -84,29 +79,27 @@ def create_char_labels(dataset_path):
 
     # save to csv
     label_df = pd.DataFrame(label)
-    label_df.to_csv("aihub_labels.csv", encoding="utf-8", index=False)
+    label_df.to_csv(label_dest+"aihub_labels.csv", encoding="utf-8", index=False)
 
 
-def create_script(dataset_path, script_prefix):
+def create_script(dataset_path, new_path, script_prefix):
     print('create_script started..')
-    char2id, id2char = load_label('aihub_labels.csv')
+    char2id, id2char = load_label(new_path+'aihub_labels.csv')
 
-    for folder in os.listdir(dataset_path):
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        for subfolder in os.listdir(folder):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.txt'):
-                    sentence, target = None, None
+    for file in os.listdir(dataset_path):
+        if "Script" in file: continue
+        if file.endswith('.txt'):
+            sentence, target = None, None
 
-                    with open(os.path.join(path, file), "r") as f:
-                        sentence = f.read()
+            with open(os.path.join(dataset_path, file), "r") as f:
+                sentence = f.read()
 
-                    with open(os.path.join(path, script_prefix + file[12:]), "w") as f:
-                        target = sentence_to_target(sentence, char2id)
-                        f.write(target)
+            with open(os.path.join(new_path, script_prefix + file[12:]), "w") as f:
+                target = sentence_to_target(sentence, char2id)
+                f.write(target)
 
 
+# not use this time, not changed
 def gather_files(dataset_path, new_path, script_prefix):
     print('gather_files started...')
     for folder in os.listdir(dataset_path):
