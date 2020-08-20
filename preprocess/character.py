@@ -1,48 +1,33 @@
 import os
 import pandas as pd
-import shutil
-from preprocess.functional import (
-    sentence_filter,
-    load_label,
-    sentence_to_target
-)
 
 
-def preprocess(dataset_path, mode='phonetic'):
-    print('preprocess started..')
-    percent_files = {
-        '087797': '퍼센트',
-        '215401': '퍼센트',
-        '284574': '퍼센트',
-        '397184': '퍼센트',
-        '501006': '프로',
-        '502173': '프로',
-        '542363': '프로',
-        '581483': '퍼센트'
-    }
+def load_label(filepath):
+    char2id = dict()
+    id2char = dict()
 
-    for folder in os.listdir(dataset_path):
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r") as f:
-                        raw_sentence = f.read()
-                        if file[12:18] in percent_files.keys():
-                            new_sentence = sentence_filter(raw_sentence, mode, percent_files[file[12:18]])
-                        else:
-                            new_sentence = sentence_filter(raw_sentence, mode=mode)
+    ch_labels = pd.read_csv(filepath, encoding="utf-8")
 
-                    with open(os.path.join(path, file), "w") as f:
-                        f.write(new_sentence)
+    id_list = ch_labels["id"]
+    char_list = ch_labels["char"]
+    freq_list = ch_labels["freq"]
 
-                else:
-                    continue
+    for (id_, char, freq) in zip(id_list, char_list, freq_list):
+        char2id[char] = id_
+        id2char[id_] = char
+    return char2id, id2char
 
 
-def create_char_labels(dataset_path, labels_dest):
+def sentence_to_target(sentence, char2id):
+    target = str()
+
+    for ch in sentence:
+        target += (str(char2id[ch]) + ' ')
+
+    return target[:-1]
+
+
+def generate_char_labels(dataset_path, labels_dest):
     print('create_char_labels started..')
 
     label_list = list()
@@ -79,7 +64,7 @@ def create_char_labels(dataset_path, labels_dest):
     label_df.to_csv(os.path.join(labels_dest, "aihub_labels.csv"), encoding="utf-8", index=False)
 
 
-def create_character_script(dataset_path, new_path, script_prefix, labels_dest):
+def generate_character_script(dataset_path, new_path, script_prefix, labels_dest):
     print('create_script started..')
     char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
@@ -96,15 +81,3 @@ def create_character_script(dataset_path, new_path, script_prefix, labels_dest):
                     with open(os.path.join(new_path, script_prefix + file[12:]), "w") as f:
                         target = sentence_to_target(sentence, char2id)
                         f.write(target)
-
-
-def gather_files(dataset_path, new_path):
-    print('gather_files started...')
-    for folder in os.listdir(dataset_path):
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.pcm'):
-                    shutil.copy(os.path.join(path, file), os.path.join(new_path, file))

@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 import sentencepiece as spm
 
 
@@ -30,7 +31,25 @@ def train_sentencepiece(dataset_path, vocab_size):
     )
 
 
-def create_subword_script(dataset_path, new_path, script_prefix):
+def generate_subword_labels(vocab_path, labels_dest):
+    subword_list = list()
+    id_list = list()
+    count = 0
+
+    with open(vocab_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            subword_list.append(line.split()[0])
+            id_list.append(count)
+            count += 1
+
+    subword_df = pd.DataFrame({
+        'subword': subword_list,
+        'id': id_list
+    })
+    subword_df.to_csv(os.path.join(labels_dest, 'subword_labels.csv'))
+
+
+def generate_subword_script(dataset_path, new_path, script_prefix):
     print('create_subword_script...')
 
     sp = spm.SentencePieceProcessor()
