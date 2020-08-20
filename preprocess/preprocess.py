@@ -20,14 +20,11 @@ def preprocess(dataset_path, new_path, mode, filenum_adjust):
             if len(percent_files[idx]) < 6:
                 percent_files[idx] = "0" * (6 - len(percent_files[idx])) + percent_files[idx]
 
-
     print('preprocess started..')
 
     for file in os.listdir(dataset_path):
         if "Script" in file: continue
         if file.endswith('.txt'):
-            new_sentence = str()
-
             with open(os.path.join(dataset_path, file), "r") as f:
                 raw_sentence = f.read()
                 new_sentence = sentence_filter(raw_sentence, mode)
@@ -54,7 +51,8 @@ def create_char_labels(dataset_path, label_dest):
     label_freq = list()
 
     for file in os.listdir(dataset_path):
-        if "Script" in file: continue
+        if "Script" in file:
+            continue
         if file.endswith('txt'):
             with open(os.path.join(dataset_path, file), "r") as f:
                 sentence = f.read()
@@ -89,8 +87,6 @@ def create_script(dataset_path, new_path, script_prefix):
     for file in os.listdir(dataset_path):
         if "Script" in file: continue
         if file.endswith('.txt'):
-            sentence, target = None, None
-
             with open(os.path.join(dataset_path, file), "r") as f:
                 sentence = f.read()
 

@@ -1,5 +1,5 @@
-import pandas as pd
 import re
+import pandas as pd
 
 
 def load_label(filepath):
@@ -85,6 +85,7 @@ def sentence_to_target(sentence, char2id):
         target += (str(char2id[ch]) + ' ')
 
     return target[:-1]
+
 
 def percent_process(sentence, option):
     if option == 'short':
