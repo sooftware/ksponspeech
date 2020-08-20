@@ -1,12 +1,12 @@
-import pandas as pd
 import re
+import pandas as pd
 
 
 def load_label(filepath):
     char2id = dict()
     id2char = dict()
 
-    ch_labels = pd.read_csv(filepath, encoding="cp949")
+    ch_labels = pd.read_csv(filepath, encoding="utf-8")
 
     id_list = ch_labels["id"]
     char_list = ch_labels["char"]

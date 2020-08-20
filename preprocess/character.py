@@ -1,7 +1,11 @@
 import os
 import pandas as pd
 import shutil
-from preprocess.functional import sentence_filter, load_label, sentence_to_target
+from preprocess.functional import (
+    sentence_filter,
+    load_label,
+    sentence_to_target
+)
 
 
 def preprocess(dataset_path):
@@ -46,7 +50,8 @@ def create_char_labels(dataset_path, labels_dest):
 
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        for subfolder in os.listdir(folder):
+        path = os.path.join(dataset_path, folder)
+        for subfolder in os.listdir(path):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('txt'):
@@ -74,13 +79,14 @@ def create_char_labels(dataset_path, labels_dest):
     label_df.to_csv(os.path.join(labels_dest, "aihub_labels.csv"), encoding="utf-8", index=False)
 
 
-def create_script(dataset_path, new_path, script_prefix):
+def create_character_script(dataset_path, new_path, script_prefix, labels_dest):
     print('create_script started..')
-    char2id, id2char = load_label('aihub_labels.csv')
+    char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        for subfolder in os.listdir(folder):
+        path = os.path.join(dataset_path, folder)
+        for subfolder in os.listdir(path):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
@@ -96,7 +102,8 @@ def gather_files(dataset_path, new_path):
     print('gather_files started...')
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        for subfolder in os.listdir(folder):
+        path = os.path.join(dataset_path, folder)
+        for subfolder in os.listdir(path):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.pcm'):
