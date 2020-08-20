@@ -1,5 +1,5 @@
 # Author
-# Soohwan Kim, Seyoung Bae
+# Soohwan Kim, Seyoung Bae, Soyoung Cho, Cheolhwang Won
 
 DATASET_PATH="SET_YOUR_DATASET_PATH"
 NEW_PATH="SET_YOUR_PATH_TO_SAVE_SCRIPT"
