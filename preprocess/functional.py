@@ -34,7 +34,7 @@ def bracket_filter(sentence, mode):
             if ch != ')' and flag is False:
                 new_sentence += ch
 
-    elif mode == 'numeric':
+    elif mode == 'spelling':
         update = True
 
         for ch in sentence:
@@ -61,7 +61,6 @@ def special_filter(sentence, replace=None):
     new_sentence = str()
     for idx, ch in enumerate(sentence):
         if ch not in SENTENCE_MARK:
-            # o/, n/ 등 처리
             if idx + 1 < len(sentence) and ch in NOISE and sentence[idx + 1] == '/':
                 continue
 

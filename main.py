@@ -13,13 +13,25 @@ from preprocess.subword import (
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='End-to-end Speech Recognition')
-    parser.add_argument('--dataset_path', type=str, default='E:/KsponSpeech/original')
-    parser.add_argument('--new_path', type=str, default='E:/KsponSpeech/character')
-    parser.add_argument('--script_prefix', type=str, default='KsponScript_')
-    parser.add_argument('--labels_dest', type=str, default='E:/KsponSpeech')
-    parser.add_argument('--preprocess_method', type=str, default='character')
-    parser.add_argument('--character_preprocess_mode', type=str, default='phonetic')
+    parser = argparse.ArgumentParser(description='KsponSpeech Preprocess')
+    parser.add_argument('--dataset_path', type=str,
+                        default='E:/KsponSpeech/original',
+                        help='path of original dataset')
+    parser.add_argument('--new_path', type=str,
+                        default='E:/KsponSpeech/character',
+                        help='new path to save')
+    parser.add_argument('--script_prefix', type=str,
+                        default='KsponScript_',
+                        help='script_prefix + FILENUM.txt : KsponScript_000001.txt')
+    parser.add_argument('--labels_dest', type=str,
+                        default='E:/KsponSpeech',
+                        help='destination to save character labels file')
+    parser.add_argument('--preprocess_method', type=str,
+                        default='character',
+                        help='character or subword (Will be added grapheme)')
+    parser.add_argument('--character_preprocess_mode', type=str,
+                        default='phonetic',
+                        help='phonetic: 칠 십 퍼센트, spelling: 70%')
     parser.add_argument('--vocab_size', type=int, default=5000)
     opt = parser.parse_args()
 

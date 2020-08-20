@@ -20,18 +20,13 @@ def generate_sentencepiece_input(dataset_path):
 
 def train_sentencepiece(dataset_path, vocab_size):
     spm.SentencePieceTrainer.Train(
-        """
-        --input=%s.txt 
-        --model_prefix=aihub_sentencepiece 
-        --vocab_size=%s 
-        --model_type=bpe 
-        --max_sentence_length=9999
-        --pad_id=0
-        --bos_id=1
-        --eos_id=2
-        --unk_id=3
-        """
-        % (dataset_path + 'aihub_vocab.txt', str(vocab_size))
+        '--input=%s.txt '
+        '--model_prefix=aihub_sentencepiece '
+        '--vocab_size=%s '
+        '--model_type=bpe '
+        '--max_sentence_length=9999 '
+        '--hard_vocab_limit=false'
+        % (dataset_path + 'aihub_vocab', str(vocab_size))
     )
 
 
