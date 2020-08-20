@@ -106,9 +106,7 @@ I appreciate any kind of feedback or contribution.  Feel free to proceed with sm
 ## Reference
   
 * [KoBert](https://github.com/SKTBrain/KoBERT)  
-  
 * [Sentencepiece](https://github.com/google/sentencepiece)  
-  
 * [hgtk](https://github.com/bluedisk/hangul-toolkit)  
   
 ## Author
