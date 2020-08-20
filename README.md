@@ -114,13 +114,6 @@ For live discussions, please go to our [gitter](https://gitter.im/Korean-Speech-
   
 I appreciate any kind of feedback or contribution.  Feel free to proceed with small issues like bug fixes, documentation improvement.  For major contributions and new features, please discuss with the collaborators in corresponding issues.  
   
-### Citing
-```
-@github{
-  title = {KsponSpeech.preprocess},
-  author = {Soohwan Kim},
-  publisher = {GitHub},
-  url = {https://github.com/sooftware/KsponSpeech.preprocess},
-  year = {2020}
-}
-```
+## Author
+* [Soohwan Kim](https://github.com/sooftware), [Seyoung Bae](https://github.com/triplet02)
+* Contacts: sh951011@gmail.com
