@@ -27,27 +27,27 @@ You can choose between phonetic transcription and spelling transcription to prep
   
 * Raw data
 ```
-"b/ 아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니 n/" 
+b/ 아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니 n/
 ``` 
   
 * Delete noise labels, such as b/, n/, / ..
 ```
-"아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니"
+아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니
 ```
   
 * Delete labels such as '/', '*', '+', etc. (used for gantour representation)
 ```
-"아 모 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니"
+아 모 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니
 ```
   
 * Option1 : phonetic transcript
 ```
-"아 모 몬 소리야 칠 십 퍼센트 확률이라니"
+아 모 몬 소리야 칠 십 퍼센트 확률이라니
 ```
 
 * Option2 : spelling transcript
 ```
-"아 모 몬 소리야 70% 확률이라니"
+아 모 몬 소리야 70% 확률이라니
 ```
   
 ## Output-Unit
@@ -56,17 +56,29 @@ This project provides processing in characters, subwords, and grapheme units.
   
 * Character-Unit
 ```
-"아 모 몬 소리야 칠 십 퍼센트 확률이라니"
+아 모 몬 소리야 칠 십 퍼센트 확률이라니
 ```
   
 * Subword-Unit
 ```
-"▁아 ▁모 ▁ 몬 ▁소리 야 ▁ 칠 ▁ 십 ▁퍼 센트 ▁확 률 이라 니
+▁아 ▁모 ▁ 몬 ▁소리 야 ▁ 칠 ▁ 십 ▁퍼 센트 ▁확 률 이라 니
 ```
 
 * Grapheme-Unit
 ```
-"ㅇㅏ ㅁㅗ ㅁㅗㄴ ㅅㅗㄹㅣㅇㅑ ㅊㅣㄹ ㅅㅣㅂ ㅍㅓㅅㅔㄴㅌㅡ ㅎㅘㄱㄹㅠㄹㅇㅣㄹㅏㄴㅣ"
+ㅇㅏ ㅁㅗ ㅁㅗㄴ ㅅㅗㄹㅣㅇㅑ ㅊㅣㄹ ㅅㅣㅂ ㅍㅓㅅㅔㄴㅌㅡ ㅎㅘㄱㄹㅠㄹㅇㅣㄹㅏㄴㅣ
+```
+   
+## Conversion to id
+  
+* transcript
+```
+아 모 몬 소리야 칠 십 퍼센트 확률이라니
+```
+
+* conversion
+```
+7 3 106 3 730 3 173 32 26 3 319 3 120 3 490 552 157 3 315 747 5 33 22
 ```
    
 ## Troubleshoots and Contributing
