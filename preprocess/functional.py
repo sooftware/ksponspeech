@@ -1,11 +1,13 @@
-import re
 import pandas as pd
+import re
 
 
 def load_label(filepath):
     char2id = dict()
     id2char = dict()
+
     ch_labels = pd.read_csv(filepath, encoding="cp949")
+
     id_list = ch_labels["id"]
     char_list = ch_labels["char"]
     freq_list = ch_labels["freq"]
@@ -16,42 +18,23 @@ def load_label(filepath):
     return char2id, id2char
 
 
-def bracket_filter(sentence, mode):
+def bracket_filter(sentence):
     new_sentence = str()
+    flag = False
 
-    if mode == 'phonetic':
-        flag = False
-
-        for ch in sentence:
-            if ch == '(' and flag is False:
-                flag = True
-                continue
-            if ch == '(' and flag is True:
-                flag = False
-                continue
-            if ch != ')' and flag is False:
-                new_sentence += ch
-
-    elif mode == 'numeric':
-        update = True
-
-        for ch in sentence:
-            if ch == '(':
-                continue
-            if ch == ')':
-                if update is True:
-                    update = False
-                    continue
-                else:
-                    update = True
-                    continue
-            if ch != ')' and update is True:
-                new_sentence += ch
-
+    for ch in sentence:
+        if ch == '(' and flag is False:
+            flag = True
+            continue
+        if ch == '(' and flag is True:
+            flag = False
+            continue
+        if ch != ')' and flag is False:
+            new_sentence += ch
     return new_sentence
 
 
-def special_filter(sentence):
+def special_filter(sentence, replace=None):
     SENTENCE_MARK = ['?', '!']
     NOISE = ['o', 'n', 'u', 'b', 'l']
     EXCEPT = ['/', '+', '*', '-', '@', '$', '^', '&', '[', ']', '=', ':', ';', '.', ',']
@@ -66,6 +49,9 @@ def special_filter(sentence):
         if ch == '#':
             new_sentence += '샾'
 
+        elif ch == '%':
+            new_sentence += replace
+
         elif ch not in EXCEPT:
             new_sentence += ch
 
@@ -74,8 +60,8 @@ def special_filter(sentence):
     return new_sentence
 
 
-def sentence_filter(raw_sentence, mode):
-    return special_filter(bracket_filter(raw_sentence, mode))
+def sentence_filter(raw_sentence, replace=None):
+    return special_filter(bracket_filter(raw_sentence), replace)
 
 
 def sentence_to_target(sentence, char2id):
@@ -85,10 +71,3 @@ def sentence_to_target(sentence, char2id):
         target += (str(char2id[ch]) + ' ')
 
     return target[:-1]
-
-
-def percent_process(sentence, option):
-    if option == 'short':
-        return sentence.replace("%", "프로")
-    elif option == 'long':
-        return sentence.replace("%", "퍼센트")
