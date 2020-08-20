@@ -8,7 +8,7 @@ from preprocess.functional import (
 )
 
 
-def preprocess(dataset_path):
+def preprocess(dataset_path, mode='phonetic'):
     print('preprocess started..')
     percent_files = {
         '087797': '퍼센트',
@@ -31,9 +31,9 @@ def preprocess(dataset_path):
                     with open(os.path.join(path, file), "r") as f:
                         raw_sentence = f.read()
                         if file[12:18] in percent_files.keys():
-                            new_sentence = sentence_filter(raw_sentence, percent_files[file[12:18]])
+                            new_sentence = sentence_filter(raw_sentence, mode, percent_files[file[12:18]])
                         else:
-                            new_sentence = sentence_filter(raw_sentence)
+                            new_sentence = sentence_filter(raw_sentence, mode=mode)
 
                     with open(os.path.join(path, file), "w") as f:
                         f.write(new_sentence)

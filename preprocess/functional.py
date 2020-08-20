@@ -18,19 +18,38 @@ def load_label(filepath):
     return char2id, id2char
 
 
-def bracket_filter(sentence):
+def bracket_filter(sentence, mode):
     new_sentence = str()
-    flag = False
 
-    for ch in sentence:
-        if ch == '(' and flag is False:
-            flag = True
-            continue
-        if ch == '(' and flag is True:
-            flag = False
-            continue
-        if ch != ')' and flag is False:
-            new_sentence += ch
+    if mode == 'phonetic':
+        flag = False
+
+        for ch in sentence:
+            if ch == '(' and flag is False:
+                flag = True
+                continue
+            if ch == '(' and flag is True:
+                flag = False
+                continue
+            if ch != ')' and flag is False:
+                new_sentence += ch
+
+    elif mode == 'numeric':
+        update = True
+
+        for ch in sentence:
+            if ch == '(':
+                continue
+            if ch == ')':
+                if update is True:
+                    update = False
+                    continue
+                else:
+                    update = True
+                    continue
+            if ch != ')' and update is True:
+                new_sentence += ch
+
     return new_sentence
 
 
@@ -60,8 +79,8 @@ def special_filter(sentence, replace=None):
     return new_sentence
 
 
-def sentence_filter(raw_sentence, replace=None):
-    return special_filter(bracket_filter(raw_sentence), replace)
+def sentence_filter(raw_sentence, mode, replace=None):
+    return special_filter(bracket_filter(raw_sentence, mode), replace)
 
 
 def sentence_to_target(sentence, char2id):
