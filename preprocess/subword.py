@@ -14,7 +14,7 @@ def generate_sentencepiece_input(dataset_path):
                 with open(os.path.join(path, file), "r") as f:
                     sentence = f.read()
 
-                with open(os.path.join(dataset_path, 'aihub_vocab.txt'), 'a') as f:
+                with open(os.path.join(dataset_path, 'aihub_vocab.txt'), 'a', encoding='utf-8') as f:
                     f.write(sentence + '\n')
 
 
