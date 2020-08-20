@@ -35,28 +35,21 @@ You can choose between phonetic transcription and spelling transcription to prep
 "아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니"
 ```
   
+* Delete labels such as '/', '*', '+', etc. (used for gantour representation)
+```
+"아 모 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니"
+```
+  
 * Option1 : phonetic transcript
 ```
-"아/ 모+ 몬 소리야 칠 십 퍼센트 확률이라니"
+"아 모 몬 소리야 칠 십 퍼센트 확률이라니"
 ```
 
 * Option2 : spelling transcript
 ```
-"아/ 모+ 몬 소리야 70% 확률이라니"
-```
-  
-* Delete labels such as '/', '*', '+', etc. (used for gantour representation)
-  
-Phonetic transcript
-```
-"아 모 몬 소리야 칠 십 퍼센트 확률이라니"
-```
-  
-Spelling transcript
-```
 "아 모 몬 소리야 70% 확률이라니"
 ```
-   
+  
 ## Output-Unit
    
 This project provides processing in characters, subwords, and grapheme units.   
