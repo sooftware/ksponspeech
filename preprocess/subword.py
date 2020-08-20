@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 import sentencepiece as spm
+from gluonnlp.data import SentencepieceTokenizer
+from kobert.utils import get_tokenizer
 
 
 def generate_sentencepiece_input(dataset_path):
@@ -49,12 +51,17 @@ def generate_subword_labels(vocab_path, labels_dest):
     subword_df.to_csv(os.path.join(labels_dest, 'subword_labels.csv'))
 
 
-def generate_subword_script(dataset_path, new_path, script_prefix):
+def generate_subword_script(dataset_path, new_path, script_prefix, use_pretrain_kobert_tokenizer=False):
     print('create_subword_script...')
 
-    sp = spm.SentencePieceProcessor()
-    vocab_file = "aihub_sentencepiece.model"
-    sp.load(vocab_file)
+    if use_pretrain_kobert_tokenizer:
+        tok_path = get_tokenizer()
+        sp = SentencepieceTokenizer(tok_path)
+
+    else:
+        sp = spm.SentencePieceProcessor()
+        vocab_file = "aihub_sentencepiece.model"
+        sp.load(vocab_file)
 
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
@@ -65,7 +72,10 @@ def generate_subword_script(dataset_path, new_path, script_prefix):
                 with open(os.path.join(path, file), "r") as f:
                     sentence = f.read()
 
-                encode = sp.encode_as_ids(sentence)
+                if use_pretrain_kobert_tokenizer:
+                    encode = sp(sentence)
+                else:
+                    encode = sp.encode_as_ids(sentence)
 
                 with open(os.path.join(new_path, script_prefix + file[12:]), "w") as f:
                     f.write(" ".join(map(str, encode)))
