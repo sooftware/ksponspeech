@@ -19,7 +19,8 @@ We will explain the details in the **Output-Unit** part below.
 ## Prerequisites
 * Pandas: `pip install pandas` (Refer [here](https://github.com/pandas-dev/pandas) for problem installing Pandas)  
 * Sentencepiece: `pip install sentencepiece` (Refer [here](https://github.com/google/sentencepiece) for problem installing Sentencepiece) 
-* hgtk: `pip install hgtk` (Refer [here]https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk) 
+* hgtk: `pip install hgtk` (Refer [here]https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk)   
+* KoBert: (Optional) Refer [here](https://github.com/SKTBrain/KoBERT) for installing   
 
    
 ## Preprocess
@@ -88,6 +89,14 @@ If you have any questions, bug reports, and feature requests, please [open an is
 For live discussions, please go to our [gitter](https://gitter.im/Korean-Speech-Recognition/community) or Contacts sh951011@gmail.com please.  
   
 I appreciate any kind of feedback or contribution.  Feel free to proceed with small issues like bug fixes, documentation improvement.  For major contributions and new features, please discuss with the collaborators in corresponding issues.  
+  
+## Reference
+  
+* [KoBert](https://github.com/SKTBrain/KoBERT)  
+  
+* [Sentencepiece](https://github.com/google/sentencepiece)  
+  
+* [hgtk](https://github.com/bluedisk/hangul-toolkit)  
   
 ## Author
 * [Soohwan Kim](https://github.com/sooftware), [Seyoung Bae](https://github.com/triplet02), [Soyoung Cho](https://github.com/SoYoungCho), [Cheolhwang Won](https://github.com/wch18735)
