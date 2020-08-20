@@ -1,18 +1,18 @@
-# KsponSpeech-preprocess
-
-### Repository for pre-processing KsponSpeech corpus provided by AI Hub.
-
-<img src="https://img.shields.io/badge/License-MIT-yellow" height=20> [<img src="https://img.shields.io/badge/chat-on%20gitter-4fb99a" height=20>](https://gitter.im/Korean-Speech-Recognition/community)  
+# KsponSpeech-preprocess: pre-processing KsponSpeech corpus priveded by AI Hub
+  
+[Soohwan Kim](https://github.com/sooftware)<sup>1,2</sup>, [Seyoung Bae](https://github.com/triplet02)<sup>1</sup> 
+  
+<sup>1</sup>Elcomm, Kwangwoon Univ. <sup>2</sup>KakaoBrain Corp.  
   
 ## Intro
 
-`KsponSpeech.preprocess` is repository for pre-processing `KsponSpeech corpus` provided by AI Hub.  
-I pre-process for a `Speech Recognition` task.   
-This repository provides **filtering transcript**, **create character labels**, **create id transcript**.   
-For detail, I explain in the `Pre-process` part below.         
-  
+`KsponSpeech-preprocess` is repository for pre-processing `KsponSpeech corpus` provided by AI Hub.  
 `KsponSpeech corpus` is a **1000h** Korean speech data corpus provided by [AI Hub](http://www.aihub.or.kr/) in Korea.   
 Anyone can download this dataset just by applying. The transcription rules can see [here](http://www.aihub.or.kr/sites/default/files/2019-12/%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%9D%8C%EC%84%B1%20%EC%A0%84%EC%82%AC%EA%B7%9C%EC%B9%99%20v1.0.pdf).  
+  
+You can pre-process in various output-units, such as 'character', 'subword', 'grapheme'  
+We will explain the details in the **Output-Unit** part below.
+ 
   
 ## Pre-process
   
