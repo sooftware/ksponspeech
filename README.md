@@ -21,7 +21,20 @@ We will explain the details in the **Output-Unit** part below.
 * Sentencepiece: `pip install sentencepiece` (Refer [here](https://github.com/google/sentencepiece) for problem installing Sentencepiece) 
 * hgtk: `pip install hgtk` (Refer [here]https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk)   
 * KoBert: (Optional) Refer [here](https://github.com/SKTBrain/KoBERT) for installing   
-
+  
+## Usage
+  
+1. Set options in [run.sh](https://github.com/sooftware/KsponSpeech-preprocess/blob/master/run.sh)  
+  
+<img src="https://user-images.githubusercontent.com/42150335/90811422-8ae6c800-e35f-11ea-8768-5b9cd3417fab.png" width=700>
+  
+  
+2. Run run.sh
+```shell
+$ ./run.sh
+```
+  
+3. Leave the computer for hours or days.  
    
 ## Preprocess
   
