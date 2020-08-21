@@ -1,10 +1,12 @@
 # KsponSpeech-preprocess
 #### Pre-processing KsponSpeech corpus priveded by AI Hub
   
-[Soohwan Kim](https://github.com/sooftware)<sup>1,3</sup>, [Seyoung Bae](https://github.com/triplet02)<sup>1</sup>, [Cheolhwang Won](https://github.com/wch18735)<sup>1</sup>, [Soyoung Cho](https://github.com/SoYoungCho)<sup>2</sup> 
+[Soohwan Kim](https://github.com/sooftware)<sup>1,3</sup>, [Seyoung Bae](https://github.com/triplet02)<sup>1</sup>, [Cheolhwang Won](https://github.com/wch18735)<sup>1</sup>, [Soyoung Cho](https://github.com/SoYoungCho)<sup>2</sup> [Jeongwon Kwak](https://github.com/jeongwonkwak)<sup>2</sup>  
   
 <sup>1</sup>Elcomm, Kwangwoon Univ. <sup>2</sup>Data Science, Kwangwoon Univ. <sup>3</sup>KakaoBrain Corp.  
   
+Thanks to [Hosung Park](https://github.com/indra622), Hyeonsoo Son for advice and insights
+   
 It's been a while since KsponSpeech was released, but it's hard to compare performance because there's no established preprocessing method. So we're revealing the pre-processing method we used in the [KoSpeech](https://github.com/sooftware/KoSpeech) project. This project provides processing in characters, subwords, and grapheme units.    
   
 ## Intro
@@ -19,7 +21,7 @@ We will explain the details in the **Output-Unit** part below.
 ## Prerequisites
 * Pandas: `pip install pandas` (Refer [here](https://github.com/pandas-dev/pandas) for problem installing Pandas)  
 * Sentencepiece: `pip install sentencepiece` (Refer [here](https://github.com/google/sentencepiece) for problem installing Sentencepiece) 
-* hgtk: `pip install hgtk` (Refer [here]https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk)   
+* hgtk: `pip install hgtk` (Refer [here](https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk)   
 * KoBert: (Optional) Refer [here](https://github.com/SKTBrain/KoBERT) for installing   
   
 ## Usage
@@ -110,5 +112,5 @@ I appreciate any kind of feedback or contribution.  Feel free to proceed with sm
 * [hgtk](https://github.com/bluedisk/hangul-toolkit)  
   
 ## Author
-* [Soohwan Kim](https://github.com/sooftware), [Seyoung Bae](https://github.com/triplet02), [Soyoung Cho](https://github.com/SoYoungCho), [Cheolhwang Won](https://github.com/wch18735)
+* [Soohwan Kim](https://github.com/sooftware), [Seyoung Bae](https://github.com/triplet02),  [Cheolhwang Won](https://github.com/wch18735), [Soyoung Cho](https://github.com/SoYoungCho), [Jeongwon Kwak](https://github.com/jeongwonkwak)
 * Contacts: sh951011@gmail.com
