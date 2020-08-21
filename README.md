@@ -21,7 +21,7 @@ We will explain the details in the **Output-Unit** part below.
 ## Prerequisites
 * Pandas: `pip install pandas` (Refer [here](https://github.com/pandas-dev/pandas) for problem installing Pandas)  
 * Sentencepiece: `pip install sentencepiece` (Refer [here](https://github.com/google/sentencepiece) for problem installing Sentencepiece) 
-* hgtk: `pip install hgtk` (Refer [here]https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk)   
+* hgtk: `pip install hgtk` (Refer [here](https://github.com/bluedisk/hangul-toolkit) for problem installing hgtk)   
 * KoBert: (Optional) Refer [here](https://github.com/SKTBrain/KoBERT) for installing   
   
 ## Usage
