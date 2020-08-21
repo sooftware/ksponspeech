@@ -3,18 +3,18 @@ import hgtk
 import pandas as pd
 
 
-def sentence_to_target(sentence, grapheme2id):
+def sentence_to_target(sentence, grpm2id):
     target = str()
 
     for grapheme in sentence:
-        target += (str(grapheme2id[grapheme]) + ' ')
+        target += (str(grpm2id[grapheme]) + ' ')
 
     return target[:-1]
 
 
 def load_label(filepath):
-    grapheme2id = dict()
-    id2grapheme = dict()
+    grpm2id = dict()
+    id2grpm = dict()
 
     grapheme_labels = pd.read_csv(filepath, encoding="utf-8")
 
@@ -22,9 +22,10 @@ def load_label(filepath):
     grapheme_list = grapheme_labels["grapheme"]
 
     for (idx, grapheme) in zip(id_list, grapheme_list):
-        grapheme2id[grapheme] = idx
-        id2grapheme[idx] = grapheme
-    return grapheme2id, id2grapheme
+        grpm2id[grapheme] = idx
+        id2grpm[idx] = grapheme
+
+    return grpm2id, id2grpm
 
 
 def character_to_grapheme(dataset_path, grapheme_save_path):

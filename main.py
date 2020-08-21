@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
     elif opt.output_unit == 'subword':
         generate_sentencepiece_input(opt.dataset_path)
-        if not opt.use_kobert:
+        if not opt.use_pretrain_kobert_tokenizer:
             train_sentencepiece(opt.dataset_path, opt.vocab_size)
         generate_subword_labels('aihub_sentencepiece.vocab', opt.labels_dest, opt.use_pretrain_kobert_tokenizer)
         generate_subword_script(opt.dataset_path, opt.new_path, opt.script_prefix)
