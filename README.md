@@ -5,6 +5,8 @@
   
 <sup>1</sup>Elcomm, Kwangwoon Univ. <sup>2</sup>Data Science, Kwangwoon Univ. <sup>3</sup>KakaoBrain Corp.  
   
+Thanks to [Hosung Park](https://github.com/indra622), Hyeonsoo Son for advice and insights
+   
 It's been a while since KsponSpeech was released, but it's hard to compare performance because there's no established preprocessing method. So we're revealing the pre-processing method we used in the [KoSpeech](https://github.com/sooftware/KoSpeech) project. This project provides processing in characters, subwords, and grapheme units.    
   
 ## Intro
