@@ -3,7 +3,7 @@ import shutil
 import argparse
 from preprocess.preprocess import preprocess
 from preprocess.character import (
-    generate_char_labels,
+    generate_character_labels,
     generate_character_script
 )
 from preprocess.subword import (
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     preprocess(opt.dataset_path, opt.preprocess_mode)
 
     if opt.output_unit == 'character':
-        generate_char_labels(opt.dataset_path, opt.labels_dest)
+        generate_character_labels(opt.dataset_path, opt.labels_dest)
         generate_character_script(opt.dataset_path, opt.new_path, opt.script_prefix, opt.labels_dest)
 
     elif opt.output_unit == 'subword':

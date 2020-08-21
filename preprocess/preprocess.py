@@ -1,5 +1,6 @@
 import os
 import re
+import platform
 
 
 def bracket_filter(sentence, mode):
@@ -71,6 +72,7 @@ def sentence_filter(raw_sentence, mode, replace=None):
 
 def preprocess(dataset_path, mode='phonetic'):
     print('preprocess started..')
+
     percent_files = {
         '087797': '퍼센트',
         '215401': '퍼센트',
@@ -82,6 +84,14 @@ def preprocess(dataset_path, mode='phonetic'):
         '581483': '퍼센트'
     }
 
+    operating_system = platform.system().lower()
+    if operating_system == 'linux' or operating_system == 'darwin':
+        encoding = 'euc-kr'
+    elif operating_system == 'windows':
+        encoding = 'cp949'
+    else:
+        raise ValueError("Unsupported Operating System : {0}".format(operating_system))
+
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
@@ -89,14 +99,14 @@ def preprocess(dataset_path, mode='phonetic'):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r") as f:
+                    with open(os.path.join(path, file), "r", encodin=encoding) as f:
                         raw_sentence = f.read()
                         if file[12:18] in percent_files.keys():
                             new_sentence = sentence_filter(raw_sentence, mode, percent_files[file[12:18]])
                         else:
                             new_sentence = sentence_filter(raw_sentence, mode=mode)
 
-                    with open(os.path.join(path, file), "w") as f:
+                    with open(os.path.join(path, file), "w", encoding=encoding) as f:
                         f.write(new_sentence)
 
                 else:
