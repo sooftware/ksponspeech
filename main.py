@@ -31,7 +31,11 @@ def gather_files(dataset_path, new_path):
                     shutil.copy(os.path.join(path, file), os.path.join(new_path, file))
 
 
-if __name__ == '__main__':
+def _get_parser():
+    """ Get arguments parser """
+    parser = argparse.ArgumentParser(description='KoSpeech')
+    parser.add_argument('--mode', type=str, default='train')
+
     parser = argparse.ArgumentParser(description='KsponSpeech Preprocess')
     parser.add_argument('--dataset_path', type=str,
                         default='E:/KsponSpeech/original',
@@ -60,6 +64,12 @@ if __name__ == '__main__':
     parser.add_argument('--use_pretrain_kobert_tokenizer', '-use_pretrain_kobert_tokenizer',
                         action='store_true', default=False,
                         help='flag indication to use pretrained sentencepiece kobert tokenizer or not (default: False)')
+
+    return parser
+
+
+def main():
+    parser = _get_parser()
     opt = parser.parse_args()
 
     preprocess(opt.dataset_path, opt.preprocess_mode)
@@ -84,3 +94,7 @@ if __name__ == '__main__':
         raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
 
     gather_files(opt.dataset_path, opt.new_path)
+
+
+if __name__ == '__main__':
+    main()
