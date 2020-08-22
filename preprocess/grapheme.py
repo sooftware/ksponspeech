@@ -49,8 +49,8 @@ def character_to_grapheme(dataset_path, grapheme_save_path):
                     with open(os.path.join(path, file), "r", encoding=encoding) as f:
                         sentence = f.read()
 
-                    with open(os.path.join(grapheme_save_path, file), "w") as f:
-                        f.write(hgtk.text.decompose(sentence).replace('ᴥ', ''), encoding=encoding)
+                    with open(os.path.join(grapheme_save_path, file), "w", encoding=encoding) as f:
+                        f.write(hgtk.text.decompose(sentence).replace('ᴥ', ''))
 
 
 def generate_grapheme_labels(dataset_path, labels_dest):

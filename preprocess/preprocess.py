@@ -3,6 +3,15 @@ import re
 import platform
 
 
+operating_system = platform.system().lower()
+if operating_system == 'linux' or operating_system == 'darwin':
+    encoding = 'euc-kr'
+elif operating_system == 'windows':
+    encoding = 'cp949'
+else:
+    raise ValueError("Unsupported Operating System : {0}".format(operating_system))
+
+
 def bracket_filter(sentence, mode='numeric_phonetic_others_spelling'):
     new_sentence = str()
 
@@ -133,14 +142,6 @@ def preprocess(dataset_path, mode='phonetic'):
         '542363': '프로',
         '581483': '퍼센트'
     }
-
-    operating_system = platform.system().lower()
-    if operating_system == 'linux' or operating_system == 'darwin':
-        encoding = 'euc-kr'
-    elif operating_system == 'windows':
-        encoding = 'cp949'
-    else:
-        raise ValueError("Unsupported Operating System : {0}".format(operating_system))
 
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
