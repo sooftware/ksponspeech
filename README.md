@@ -43,27 +43,31 @@ You can choose between phonetic transcription and spelling transcription to prep
   
 * Raw data
 ```
-b/ 아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니 n/
+b/ (70%)/(칠 십 퍼센트) 확률이라니 아/ (뭐+ 뭔)/(모+ 몬) 소리야 진짜 (100%)(백 프로)가 왜 안돼? n/
 ``` 
   
 * Delete noise labels, such as b/, n/, / ..
 ```
-아/ 모+ 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니
+(70%)/(칠 십 퍼센트) 확률이라니 아/ (뭐+ 뭔)/(모+ 몬) 소리야 진짜 (100%)(백 프로)가 왜 안돼?
 ```
   
 * Delete labels such as '/', '*', '+', etc. (used for gantour representation)
 ```
-아 모 몬 소리야 (70%)/(칠 십 퍼센트) 확률이라니
+(70%)/(칠 십 퍼센트) 확률이라니 아 (뭐 뭔)/(모 몬) 소리야 진짜 (100%)(백 프로)가 왜 안돼?
 ```
   
 * Option1 : phonetic transcript
 ```
-아 모 몬 소리야 칠 십 퍼센트 확률이라니
+칠 십 퍼센트 확률이라니 아 모 몬 소리야 진짜 백 프로가 왜 안돼?
 ```
 
 * Option2 : spelling transcript
 ```
-아 모 몬 소리야 70% 확률이라니
+70% 확률이라니 아 뭐 뭔 소리야 진짜 100%가 왜 안돼?
+```
+* Option3 : numeric_phonetic_otherwise_spelling
+```
+칠 십 퍼센트 확률이라니 뭐 뭔 소리야 진짜 백 프로가 왜 안돼?
 ```
   
 ## Output-Unit
