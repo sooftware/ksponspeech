@@ -53,8 +53,11 @@ def _get_parser():
                         default='character',
                         help='character or subword or grapheme')
     parser.add_argument('--preprocess_mode', type=str,
-                        default='phonetic',
-                        help='phonetic: 칠 십 퍼센트, spelling: 70%')
+                        default='numeric_phonetic_otherwise_spelling',
+                        help='Ex) (70%)/(칠 십 퍼센트) 확률이라니 (뭐 뭔)/(모 몬) 소리야 진짜 (100%)/(백 프로)가 왜 안돼?'
+                             'phonetic: 칠 십 퍼센트 확률이라니 모 몬 소리야 진짜 백 프로가 왜 안돼?'
+                             'spelling: 70% 확률이라니 뭐 뭔 소리야 진짜 100%가 왜 안돼?'
+                             'numeric_phonetic_otherwise_spelling: 칠 십 퍼센트 확률이라니 뭐 뭔 소리야 진짜 백 프로가 왜 안돼?')
     parser.add_argument('--vocab_size', type=int,
                         default=5000,
                         help='size of vocab (default: 5000)')
@@ -66,6 +69,19 @@ def _get_parser():
                         help='flag indication to use pretrained sentencepiece kobert tokenizer or not (default: False)')
 
     return parser
+
+
+def log_info(opt):
+    print("Dataset Path : %s" % opt.dataset_path)
+    print("New Path : %s" % opt.new_path)
+    print("Script Prefix : %s" % opt.script_prefix)
+    print("Labels Dest : %s" % opt.labels_dest)
+    print("Output-Unit : %s" % opt.output_unit)
+    print("Preprocess Mode : %s" % opt.preprocess_mode)
+    if opt.output_unit == 'grapheme':
+        print("Grapheme Save Path : %s" % opt.grapheme_save_path)
+    if opt.output_unit == 'subword':
+        print("Use Pretrain Kobert Tokenizer : %s" % opt.use_pretrain_kobert_tokenizer)
 
 
 def main():

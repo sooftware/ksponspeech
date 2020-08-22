@@ -3,7 +3,7 @@ import re
 import platform
 
 
-def bracket_filter(sentence, mode):
+def bracket_filter(sentence, mode='numeric_phonetic_others_spelling'):
     new_sentence = str()
 
     if mode == 'phonetic':
@@ -33,6 +33,56 @@ def bracket_filter(sentence, mode):
                     flag = True
                     continue
             if ch != ')' and flag is True:
+                new_sentence += ch
+
+    elif mode == 'numeric_phonetic_otherwise_spelling':
+        isfront = False
+        front_bracket = False
+        back_bracket = False
+        skip = False
+
+        for idx, ch in enumerate(sentence):
+            if ch == '(':
+                if isfront:
+                    isfront = False
+                else:
+                    isfront = True
+
+                if isfront:
+                    if sentence[idx + 1].isnumeric():
+                        front_bracket = False
+                        back_bracket = True
+                        skip = True
+                    else:
+                        front_bracket = True
+                        back_bracket = False
+
+                if front_bracket and isfront:
+                    skip = False
+
+                elif front_bracket and not isfront:
+                    skip = True
+
+                elif back_bracket and isfront:
+                    skip = True
+
+                elif back_bracket and not isfront:
+                    skip = False
+
+            elif ch == ')':
+                if front_bracket and isfront:
+                    skip = True
+
+                elif front_bracket and not isfront:
+                    skip = False
+
+                elif back_bracket and isfront:
+                    skip = True
+
+                elif back_bracket and not isfront:
+                    skip = False
+
+            elif not skip:
                 new_sentence += ch
 
     return new_sentence
