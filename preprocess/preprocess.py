@@ -1,15 +1,5 @@
 import os
 import re
-import platform
-
-
-operating_system = platform.system().lower()
-if operating_system == 'linux' or operating_system == 'darwin':
-    encoding = 'euc-kr'
-elif operating_system == 'windows':
-    encoding = 'cp949'
-else:
-    raise ValueError("Unsupported Operating System : {0}".format(operating_system))
 
 
 def bracket_filter(sentence, mode='numeric_phonetic_others_spelling'):
@@ -150,14 +140,14 @@ def preprocess(dataset_path, mode='phonetic'):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encodin=encoding) as f:
+                    with open(os.path.join(path, file), "r", encodin='cp949') as f:
                         raw_sentence = f.read()
                         if file[12:18] in percent_files.keys():
                             new_sentence = sentence_filter(raw_sentence, mode, percent_files[file[12:18]])
                         else:
                             new_sentence = sentence_filter(raw_sentence, mode=mode)
 
-                    with open(os.path.join(path, file), "w", encoding=encoding) as f:
+                    with open(os.path.join(path, file), "w", encoding='cp949') as f:
                         f.write(new_sentence)
 
                 else:

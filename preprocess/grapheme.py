@@ -1,16 +1,6 @@
 import os
 import hgtk
 import pandas as pd
-import platform
-
-
-operating_system = platform.system().lower()
-if operating_system == 'linux' or operating_system == 'darwin':
-    encoding = 'euc-kr'
-elif operating_system == 'windows':
-    encoding = 'cp949'
-else:
-    raise ValueError("Unsupported Operating System : {0}".format(operating_system))
 
 
 def sentence_to_target(sentence, grpm2id):
@@ -46,10 +36,10 @@ def character_to_grapheme(dataset_path, grapheme_save_path):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encoding=encoding) as f:
+                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         sentence = f.read()
 
-                    with open(os.path.join(grapheme_save_path, file), "w", encoding=encoding) as f:
+                    with open(os.path.join(grapheme_save_path, file), "w", encoding='cp949') as f:
                         f.write(hgtk.text.decompose(sentence).replace('ᴥ', ''))
 
 
@@ -66,7 +56,7 @@ def generate_grapheme_labels(dataset_path, labels_dest):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('txt'):
-                    with open(os.path.join(path, file), "r", encoding=encoding) as f:
+                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         sentence = f.read()
 
                         for grapheme in sentence:
@@ -100,9 +90,9 @@ def generate_grapheme_script(dataset_path, new_path, script_prefix, labels_dest)
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encoding=encoding) as f:
+                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         sentence = f.read()
 
-                    with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding=encoding) as f:
+                    with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
                         target = sentence_to_target(sentence, grpm2id)
                         f.write(target)

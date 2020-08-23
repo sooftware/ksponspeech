@@ -1,18 +1,8 @@
 import os
 import pandas as pd
 import sentencepiece as spm
-import platform
 from gluonnlp.data import SentencepieceTokenizer
 from kobert.utils import get_tokenizer
-
-
-operating_system = platform.system().lower()
-if operating_system == 'linux' or operating_system == 'darwin':
-    encoding = 'euc-kr'
-elif operating_system == 'windows':
-    encoding = 'cp949'
-else:
-    raise ValueError("Unsupported Operating System : {0}".format(operating_system))
 
 
 def generate_sentencepiece_input(dataset_path):
@@ -27,7 +17,7 @@ def generate_sentencepiece_input(dataset_path):
                 with open(os.path.join(path, file), "r") as f:
                     sentence = f.read()
 
-                with open(os.path.join(dataset_path, 'aihub_vocab.txt'), 'a', encoding=encoding) as f:
+                with open(os.path.join(dataset_path, 'aihub_vocab.txt'), 'a', encoding='cp949') as f:
                     f.write(sentence + '\n')
 
 
@@ -48,7 +38,7 @@ def generate_subword_labels(vocab_path, labels_dest):
     id_list = list()
     count = 0
 
-    with open(vocab_path, 'r', encoding=encoding) as f:
+    with open(vocab_path, 'r', encoding='cp949') as f:
         for line in f:
             subword_list.append(line.split()[0])
             id_list.append(count)
@@ -79,7 +69,7 @@ def generate_subword_script(dataset_path, new_path, script_prefix, use_pretrain_
         for subfolder in os.listdir(path):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
-                with open(os.path.join(path, file), "r", encoding=encoding) as f:
+                with open(os.path.join(path, file), "r", encoding='cp949') as f:
                     sentence = f.read()
 
                 if use_pretrain_kobert_tokenizer:
@@ -87,5 +77,5 @@ def generate_subword_script(dataset_path, new_path, script_prefix, use_pretrain_
                 else:
                     encode = sp.encode_as_ids(sentence)
 
-                with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding=encoding) as f:
+                with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
                     f.write(" ".join(map(str, encode)))

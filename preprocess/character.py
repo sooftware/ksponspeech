@@ -1,15 +1,5 @@
 import os
 import pandas as pd
-import platform
-
-
-operating_system = platform.system().lower()
-if operating_system == 'linux' or operating_system == 'darwin':
-    encoding = 'euc-kr'
-elif operating_system == 'windows':
-    encoding = 'cp949'
-else:
-    raise ValueError("Unsupported Operating System : {0}".format(operating_system))
 
 
 def load_label(filepath):
@@ -50,7 +40,7 @@ def generate_character_labels(dataset_path, labels_dest):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('txt'):
-                    with open(os.path.join(path, file, encoding=encoding), "r") as f:
+                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         sentence = f.read()
 
                         for ch in sentence:
@@ -85,9 +75,9 @@ def generate_character_script(dataset_path, new_path, script_prefix, labels_dest
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encoding=encoding) as f:
+                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         sentence = f.read()
 
-                    with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding=encoding) as f:
+                    with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
                         target = sentence_to_target(sentence, char2id)
                         f.write(target)
