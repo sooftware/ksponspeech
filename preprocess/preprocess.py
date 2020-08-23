@@ -140,7 +140,7 @@ def preprocess(dataset_path, mode='phonetic'):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
                 if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encodin='cp949') as f:
+                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         raw_sentence = f.read()
                         if file[12:18] in percent_files.keys():
                             new_sentence = sentence_filter(raw_sentence, mode, percent_files[file[12:18]])

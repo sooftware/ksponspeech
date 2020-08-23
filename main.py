@@ -87,6 +87,7 @@ def log_info(opt):
 def main():
     parser = _get_parser()
     opt = parser.parse_args()
+    log_info(opt)
 
     preprocess(opt.dataset_path, opt.preprocess_mode)
 
