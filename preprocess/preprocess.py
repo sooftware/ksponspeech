@@ -136,9 +136,17 @@ def preprocess(dataset_path, new_path, mode='phonetic'):
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
+        for idx, subfolder in enumerate(os.listdir(path)):
+            if idx == 0:
+                if not (os.path.isdir(os.path.join(new_path, folder))):
+                    os.makedirs(os.path.join(new_path, folder))
             path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
+
+            for jdx, file in enumerate(os.listdir(path)):
+                if jdx == 0:
+                    if not (os.path.isdir(os.path.join(new_path, folder, subfolder))):
+                        os.makedirs(os.path.join(new_path, folder, subfolder))
+
                 if file.endswith('.txt'):
                     with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         raw_sentence = f.read()
