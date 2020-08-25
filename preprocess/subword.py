@@ -29,7 +29,7 @@ def train_sentencepiece(dataset_path, vocab_size):
         '--model_type=bpe '
         '--max_sentence_length=9999 '
         '--hard_vocab_limit=false'
-        % (dataset_path + 'aihub_vocab', str(vocab_size))
+        % (dataset_path + '/aihub_vocab', str(vocab_size))
     )
 
 
