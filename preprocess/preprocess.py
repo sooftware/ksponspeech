@@ -119,7 +119,7 @@ def sentence_filter(raw_sentence, mode, replace=None):
     return special_filter(bracket_filter(raw_sentence, mode), mode, replace)
 
 
-def preprocess(dataset_path, mode='phonetic'):
+def preprocess(dataset_path, new_path, mode='phonetic'):
     print('preprocess started..')
 
     percent_files = {
@@ -147,7 +147,7 @@ def preprocess(dataset_path, mode='phonetic'):
                         else:
                             new_sentence = sentence_filter(raw_sentence, mode=mode)
 
-                    with open(os.path.join(path, file), "w", encoding='cp949') as f:
+                    with open(os.path.join(new_path, file), "w", encoding='cp949') as f:
                         f.write(new_sentence)
 
                 else:
