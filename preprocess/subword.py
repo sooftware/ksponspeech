@@ -9,6 +9,8 @@ def generate_sentencepiece_input(dataset_path):
     print('generate_sentencepiece_input...')
 
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):
@@ -64,6 +66,8 @@ def generate_subword_script(dataset_path, new_path, script_prefix, use_pretrain_
         sp.load(vocab_file)
 
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):

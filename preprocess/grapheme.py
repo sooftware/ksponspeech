@@ -30,6 +30,8 @@ def load_label(filepath):
 
 def character_to_grapheme(dataset_path, grapheme_save_path):
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):
@@ -50,6 +52,8 @@ def generate_grapheme_labels(dataset_path, labels_dest):
     grapheme_freq = list()
 
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):
@@ -84,6 +88,8 @@ def generate_grapheme_script(dataset_path, new_path, script_prefix, labels_dest)
     grpm2id, id2grpm = load_label(os.path.join(labels_dest, 'grapheme_labels.csv'))
 
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):

@@ -135,6 +135,8 @@ def preprocess(dataset_path, new_path, mode='phonetic'):
 
     for folder in os.listdir(dataset_path):
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
+        if not folder.startswith('KsponSpeech'):
+            continue
         path = os.path.join(dataset_path, folder)
         for idx, subfolder in enumerate(os.listdir(path)):
             if idx == 0:

@@ -34,6 +34,8 @@ def generate_character_labels(dataset_path, labels_dest):
     label_freq = list()
 
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):
@@ -69,6 +71,8 @@ def generate_character_script(dataset_path, new_path, script_prefix, labels_dest
     char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):
