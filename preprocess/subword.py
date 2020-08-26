@@ -125,7 +125,7 @@ def sentence_to_subwords(dataset_path, subword_save_path, script_prefix, use_pre
                 if use_pretrain_kobert_tokenizer:
                     encode = sp(sentence)
                 else:
-                    encode = sp.encode(sentence)
+                    encode = sp.encode_as_pieces(sentence)
 
                 with open(os.path.join(subword_save_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
                     f.write(" ".join(map(str, encode)))
