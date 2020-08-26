@@ -38,9 +38,6 @@ def merge_dataset(dataset_path, new_path):
 
 def _get_parser():
     """ Get arguments parser """
-    parser = argparse.ArgumentParser(description='KoSpeech')
-    parser.add_argument('--mode', type=str, default='train')
-
     parser = argparse.ArgumentParser(description='KsponSpeech Preprocess')
     parser.add_argument('--dataset_path', type=str,
                         default='E:/KsponSpeech/original',
