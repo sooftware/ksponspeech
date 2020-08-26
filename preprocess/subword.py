@@ -6,26 +6,26 @@ from kobert.utils import get_tokenizer
 
 
 def load_label(filepath):
-    grpm2id = dict()
-    id2grpm = dict()
+    subword2id = dict()
+    id2subword = dict()
 
-    grapheme_labels = pd.read_csv(filepath, encoding="utf-8")
+    subword_labels = pd.read_csv(filepath, encoding="utf-8")
 
-    id_list = grapheme_labels["id"]
-    grapheme_list = grapheme_labels["grapheme"]
+    id_list = subword_labels["id"]
+    subword_list = subword_labels["subword"]
 
-    for (idx, grapheme) in zip(id_list, grapheme_list):
-        grpm2id[grapheme] = idx
-        id2grpm[idx] = grapheme
+    for (idx, subword) in zip(id_list, subword_list):
+        subword2id[subword] = idx
+        id2subword[idx] = subword
 
-    return grpm2id, id2grpm
+    return subword2id, id2subword
 
 
 def sentence_to_target(sentence, subword2id):
     target = str()
 
-    for grapheme in sentence:
-        target += (str(subword2id[grapheme]) + ' ')
+    for subword in sentence:
+        target += (str(subword2id[subword]) + ' ')
 
     return target[:-1]
 
@@ -76,18 +76,18 @@ def generate_subword_labels(dataset_path, labels_dest):
             for file in os.listdir(path):
                 if file.endswith('txt'):
                     with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                        sentence = f.read()
+                        sentence = f.read().split()
 
-                        for ch in sentence:
-                            if ch not in label_list:
-                                label_list.append(ch)
+                        for subword in sentence:
+                            if subword not in label_list:
+                                label_list.append(subword)
                                 label_freq.append(1)
                             else:
-                                label_freq[label_list.index(ch)] += 1
+                                label_freq[label_list.index(subword)] += 1
 
     # sort together Using zip
     label_freq, label_list = zip(*sorted(zip(label_freq, label_list), reverse=True))
-    label = {'id': [0, 1, 2], 'char': ['<pad>', '<sos>', '<eos>'], 'freq': [0, 0, 0]}
+    label = {'id': [0, 1, 2], 'subword': ['<pad>', '<sos>', '<eos>'], 'freq': [0, 0, 0]}
 
     for idx, (subword, freq) in enumerate(zip(label_list, label_freq)):
         label['id'].append(idx + 3)
@@ -145,7 +145,7 @@ def generate_subword_script(dataset_path, new_path, script_prefix, labels_dest):
             for file in os.listdir(path):
                 if file.endswith('.txt'):
                     with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                        sentence = f.read()
+                        sentence = f.read().split()
 
                     with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
                         target = sentence_to_target(sentence, subword2id)
