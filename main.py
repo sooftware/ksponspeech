@@ -11,6 +11,7 @@ from preprocess.subword import (
     generate_sentencepiece_input,
     train_sentencepiece,
     generate_subword_labels,
+    sentence_to_subwords,
     generate_subword_script
 )
 from preprocess.grapheme import (
@@ -71,6 +72,9 @@ def _get_parser():
     parser.add_argument('--grapheme_save_path', type=str,
                         default='E:/KsponSpeech/grapheme_script',
                         help='save path of grapheme text files')
+    parser.add_argument('--subword_save_path', type=str,
+                        default='E:/KsponSpeech/grapheme_script',
+                        help='save path of grapheme text files')
     parser.add_argument('--use_pretrain_kobert_tokenizer', '-use_pretrain_kobert_tokenizer',
                         action='store_true', default=False,
                         help='flag indication to use pretrained sentencepiece kobert tokenizer or not (default: False)')
@@ -107,8 +111,9 @@ def main():
         generate_sentencepiece_input(opt.preprocessed_dataset_path)
         if not opt.use_pretrain_kobert_tokenizer:
             train_sentencepiece(opt.preprocessed_dataset_path, opt.vocab_size)
-        generate_subword_labels('aihub_sentencepiece.vocab', opt.labels_dest)
-        generate_subword_script(opt.preprocessed_dataset_path, opt.new_path, opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
+        sentence_to_subwords(opt.preprocessed_dataset_path, opt.subword_save_path, opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
+        generate_subword_labels(opt.subword_save_path, opt.labels_dest)
+        generate_subword_script(opt.subword_save_path, opt.new_path, opt.script_prefix, opt.labels_dest)
 
     elif opt.output_unit == 'grapheme':
         character_to_grapheme(opt.preprocessed_dataset_path, opt.grapheme_save_path)
