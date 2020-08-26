@@ -103,8 +103,8 @@ def main():
         generate_sentencepiece_input(opt.preprocessed_dataset_path)
         if not opt.use_pretrain_kobert_tokenizer:
             train_sentencepiece(opt.preprocessed_dataset_path, opt.vocab_size)
-        generate_subword_labels('aihub_sentencepiece.vocab', opt.labels_dest, opt.use_pretrain_kobert_tokenizer)
-        generate_subword_script(opt.preprocessed_dataset_path, opt.new_path, opt.script_prefix)
+        generate_subword_labels('aihub_sentencepiece.vocab', opt.labels_dest)
+        generate_subword_script(opt.preprocessed_dataset_path, opt.new_path, opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
 
     elif opt.output_unit == 'grapheme':
         character_to_grapheme(opt.preprocessed_dataset_path, opt.grapheme_save_path)
