@@ -22,6 +22,8 @@ from preprocess.grapheme import (
 def gather_files(dataset_path, new_path):
     print('gather_files started...')
     for folder in os.listdir(dataset_path):
+        if not folder.startswith('KsponSpeech'):
+            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, folder)
         for subfolder in os.listdir(path):
