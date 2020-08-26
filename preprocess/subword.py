@@ -40,7 +40,7 @@ def generate_subword_labels(vocab_path, labels_dest):
     id_list = list()
     count = 0
 
-    with open(vocab_path, 'r', encoding='cp949') as f:
+    with open(vocab_path, 'r', encoding='utf-8') as f:
         for line in f:
             subword_list.append(line.split()[0])
             id_list.append(count)
