@@ -41,7 +41,7 @@ def generate_sentencepiece_input(dataset_path):
         for subfolder in os.listdir(path):
             path = os.path.join(dataset_path, folder, subfolder)
             for file in os.listdir(path):
-                with open(os.path.join(path, file), "r") as f:
+                with open(os.path.join(path, file), "r", encoding='cp949') as f:
                     sentence = f.read()
 
                 with open(os.path.join(dataset_path, 'aihub_vocab.txt'), 'a', encoding='cp949') as f:
