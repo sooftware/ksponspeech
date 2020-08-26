@@ -116,7 +116,7 @@ def main():
     else:
         raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
 
-    gather_files(opt.preprocessed_dataset_path, opt.new_path)
+    gather_files(opt.dataset_path, opt.new_path)
 
 
 if __name__ == '__main__':
