@@ -1,6 +1,7 @@
 import os
 import shutil
 import argparse
+from tqdm import trange
 from preprocess.preprocess import preprocess
 from preprocess.character import (
     generate_character_labels,
@@ -19,15 +20,16 @@ from preprocess.grapheme import (
 )
 
 
-def gather_files(dataset_path, new_path):
-    print('gather_files started...')
-    for folder in os.listdir(dataset_path):
-        if not folder.startswith('KsponSpeech'):
+def merge_dataset(dataset_path, new_path):
+    print('merge_dataset started...')
+
+    for folder_idx in trange(len(os.listdir(dataset_path))):
+        if not dataset_path[folder_idx].startswith('KsponSpeech'):
             continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
+        path = os.path.join(dataset_path, dataset_path[folder_idx])
         for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
+            path = os.path.join(dataset_path, dataset_path[folder_idx], subfolder)
             for file in os.listdir(path):
                 if file.endswith('.pcm'):
                     shutil.copy(os.path.join(path, file), os.path.join(new_path, file))
@@ -116,7 +118,7 @@ def main():
     else:
         raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
 
-    gather_files(opt.dataset_path, opt.new_path)
+    merge_dataset(opt.dataset_path, opt.new_path)
 
 
 if __name__ == '__main__':
