@@ -39,7 +39,7 @@ The text for provided by the AI Hub is as follows.
 "아/ 모+ 몬 소리야 칠 십 퍼센트 확률이라니"
 ```
   
-* Delete labels such as '/', '*', '+', etc. (used for gantour representation)
+* Delete labels such as '/', '*', '+', etc. (used for interjection representation)
 ```
 "아 모 몬 소리야 칠 십 퍼센트 확률이라니"
 ```
