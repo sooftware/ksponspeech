@@ -66,24 +66,17 @@ def generate_subword_labels(dataset_path, labels_dest):
     label_list = list()
     label_freq = list()
 
-    for folder in os.listdir(dataset_path):
-        if not folder.startswith('KsponSpeech'):
-            continue
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('txt'):
-                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                        sentence = f.read().split()
+    for file in os.listdir(dataset_path):
+        if file.endswith('txt'):
+            with open(os.path.join(dataset_path, file), "r", encoding='cp949') as f:
+                sentence = f.read().split()
 
-                        for subword in sentence:
-                            if subword not in label_list:
-                                label_list.append(subword)
-                                label_freq.append(1)
-                            else:
-                                label_freq[label_list.index(subword)] += 1
+                for subword in sentence:
+                    if subword not in label_list:
+                        label_list.append(subword)
+                        label_freq.append(1)
+                    else:
+                        label_freq[label_list.index(subword)] += 1
 
     # sort together Using zip
     label_freq, label_list = zip(*sorted(zip(label_freq, label_list), reverse=True))
@@ -135,18 +128,11 @@ def generate_subword_script(dataset_path, new_path, script_prefix, labels_dest):
     print('generate_subword_script started..')
     subword2id, id2subword = load_label(os.path.join(labels_dest, 'aihub_subword_labels.csv'))
 
-    for folder in os.listdir(dataset_path):
-        if not folder.startswith('KsponSpeech'):
-            continue
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                        sentence = f.read().split()
+    for file in os.listdir(dataset_path):
+        if file.endswith('.txt'):
+            with open(os.path.join(dataset_path, file), "r", encoding='cp949') as f:
+                sentence = f.read().split()
 
-                    with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
-                        target = sentence_to_target(sentence, subword2id)
-                        f.write(target)
+            with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
+                target = sentence_to_target(sentence, subword2id)
+                f.write(target)
