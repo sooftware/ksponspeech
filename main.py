@@ -28,9 +28,9 @@ def merge_dataset(dataset_path, new_path):
         if not dataset_path[folder_idx].startswith('KsponSpeech'):
             continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, dataset_path[folder_idx])
+        path = os.path.join(dataset_path, os.listdir(dataset_path)[folder_idx])
         for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, dataset_path[folder_idx], subfolder)
+            path = os.path.join(dataset_path, os.listdir(dataset_path)[folder_idx], subfolder)
             for file in os.listdir(path):
                 if file.endswith('.pcm'):
                     shutil.copy(os.path.join(path, file), os.path.join(new_path, file))
@@ -105,8 +105,8 @@ def main():
         generate_character_script(opt.preprocessed_dataset_path, opt.new_path, opt.script_prefix, opt.labels_dest)
 
     elif opt.output_unit == 'subword':
-        generate_sentencepiece_input(opt.preprocessed_dataset_path)
         if not opt.use_pretrain_kobert_tokenizer:
+            generate_sentencepiece_input(opt.preprocessed_dataset_path)
             train_sentencepiece(opt.preprocessed_dataset_path, opt.vocab_size)
         sentence_to_subwords(opt.preprocessed_dataset_path, opt.subword_save_path, opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
         generate_subword_labels(opt.subword_save_path, opt.labels_dest)
