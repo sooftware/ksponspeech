@@ -25,8 +25,6 @@ def merge_dataset(dataset_path, new_path):
     print('merge_dataset started...')
 
     for folder_idx in trange(len(os.listdir(dataset_path))):
-        if not dataset_path[folder_idx].startswith('KsponSpeech'):
-            continue
         # folder : {KsponSpeech_01, ..., KsponSpeech_05}
         path = os.path.join(dataset_path, os.listdir(dataset_path)[folder_idx])
         for subfolder in os.listdir(path):
