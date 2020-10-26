@@ -1,7 +1,4 @@
-import os
-import shutil
 import argparse
-from tqdm import trange
 from preprocess.preprocess import preprocess
 from preprocess.character import (
     generate_character_labels,
@@ -19,19 +16,6 @@ from preprocess.grapheme import (
     generate_grapheme_labels,
     generate_grapheme_script
 )
-
-
-def merge_dataset(dataset_path, new_path):
-    print('merge_dataset started...')
-
-    for folder_idx in trange(len(os.listdir(dataset_path))):
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, os.listdir(dataset_path)[folder_idx])
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, os.listdir(dataset_path)[folder_idx], subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.pcm'):
-                    shutil.copy(os.path.join(path, file), os.path.join(new_path, file))
 
 
 def _get_parser():
@@ -100,13 +84,14 @@ def main():
 
     if opt.output_unit == 'character':
         generate_character_labels(opt.preprocessed_dataset_path, opt.labels_dest)
-        generate_character_script(opt.preprocessed_dataset_path, opt.new_path, opt.script_prefix, opt.labels_dest)
+        generate_character_script(opt.preprocessed_dataset_path, opt.new_path, opt.labels_dest)
 
     elif opt.output_unit == 'subword':
         if not opt.use_pretrain_kobert_tokenizer:
             generate_sentencepiece_input(opt.preprocessed_dataset_path)
             train_sentencepiece(opt.preprocessed_dataset_path, opt.vocab_size)
-        sentence_to_subwords(opt.preprocessed_dataset_path, opt.subword_save_path, opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
+        sentence_to_subwords(opt.preprocessed_dataset_path, opt.subword_save_path,
+                             opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
         generate_subword_labels(opt.subword_save_path, opt.labels_dest)
         generate_subword_script(opt.subword_save_path, opt.new_path, opt.script_prefix, opt.labels_dest)
 
@@ -117,8 +102,6 @@ def main():
 
     else:
         raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
-
-    merge_dataset(opt.dataset_path, opt.new_path)
 
 
 if __name__ == '__main__':

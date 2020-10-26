@@ -24,7 +24,7 @@ def sentence_to_target(sentence, char2id):
     for ch in sentence:
         target += (str(char2id[ch]) + ' ')
 
-    return target[:-1]
+    return "%s\n" % target[:-1]
 
 
 def generate_character_labels(dataset_path, labels_dest):
@@ -66,22 +66,25 @@ def generate_character_labels(dataset_path, labels_dest):
     label_df.to_csv(os.path.join(labels_dest, "aihub_labels.csv"), encoding="utf-8", index=False)
 
 
-def generate_character_script(dataset_path, new_path, script_prefix, labels_dest):
+def generate_character_script(dataset_path, new_path, labels_dest):
     print('create_script started..')
     char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
-    for folder in os.listdir(dataset_path):
-        if not folder.startswith('KsponSpeech'):
-            continue
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('.txt'):
-                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                        sentence = f.read()
+    with open(os.path.join(new_path, "transcripts.txt"), "w") as trans_file:
+        trans_file.write("%s\n" % dataset_path)
 
-                    with open(os.path.join(new_path, script_prefix + file[12:]), "w", encoding='cp949') as f:
-                        target = sentence_to_target(sentence, char2id)
-                        f.write(target)
+        for folder in os.listdir(dataset_path):
+            if not folder.startswith('KsponSpeech'):
+                continue
+            # folder : {KsponSpeech_01, ..., KsponSpeech_05}
+            path = os.path.join(dataset_path, folder)
+            for subfolder in os.listdir(path):
+                path = os.path.join(dataset_path, folder, subfolder)
+                for file in os.listdir(path):
+                    if file.endswith('.txt'):
+                        with open(os.path.join(path, file), "r", encoding='cp949') as f:
+                            sentence = f.read()
+
+                        transcript = sentence_to_target(sentence, char2id)
+                        line = "%s\t%s" % (os.path.join(folder, subfolder, file), transcript)
+                        trans_file.write(line)
