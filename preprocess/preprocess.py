@@ -119,8 +119,9 @@ def sentence_filter(raw_sentence, mode, replace=None):
     return special_filter(bracket_filter(raw_sentence, mode), mode, replace)
 
 
-def preprocess(dataset_path, new_path, mode='phonetic'):
+def preprocess(dataset_path, mode='phonetic'):
     print('preprocess started..')
+    transcripts = list()
 
     percent_files = {
         '087797': '퍼센트',
@@ -139,16 +140,9 @@ def preprocess(dataset_path, new_path, mode='phonetic'):
             continue
         path = os.path.join(dataset_path, folder)
         for idx, subfolder in enumerate(os.listdir(path)):
-            if idx == 0:
-                if not (os.path.isdir(os.path.join(new_path, folder))):
-                    os.makedirs(os.path.join(new_path, folder))
             path = os.path.join(dataset_path, folder, subfolder)
 
             for jdx, file in enumerate(os.listdir(path)):
-                if jdx == 0:
-                    if not (os.path.isdir(os.path.join(new_path, folder, subfolder))):
-                        os.makedirs(os.path.join(new_path, folder, subfolder))
-
                 if file.endswith('.txt'):
                     with open(os.path.join(path, file), "r", encoding='cp949') as f:
                         raw_sentence = f.read()
@@ -157,8 +151,9 @@ def preprocess(dataset_path, new_path, mode='phonetic'):
                         else:
                             new_sentence = sentence_filter(raw_sentence, mode=mode)
 
-                    with open(os.path.join(new_path, folder, subfolder, file), "w", encoding='cp949') as f:
-                        f.write(new_sentence)
+                    transcripts.append(new_sentence)
 
                 else:
                     continue
+
+    return transcripts

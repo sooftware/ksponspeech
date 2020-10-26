@@ -80,28 +80,29 @@ def main():
     opt = parser.parse_args()
     log_info(opt)
 
-    preprocess(opt.dataset_path, opt.preprocessed_dataset_path, opt.preprocess_mode)
+    transcripts = preprocess(opt.dataset_path, opt.preprocess_mode)
 
     if opt.output_unit == 'character':
-        generate_character_labels(opt.preprocessed_dataset_path, opt.labels_dest)
-        generate_character_script(opt.preprocessed_dataset_path, opt.new_path, opt.labels_dest)
+        generate_character_labels(transcripts, opt.labels_dest)
+        generate_character_script(transcripts, opt.labels_dest)
 
-    elif opt.output_unit == 'subword':
-        if not opt.use_pretrain_kobert_tokenizer:
-            generate_sentencepiece_input(opt.preprocessed_dataset_path)
-            train_sentencepiece(opt.preprocessed_dataset_path, opt.vocab_size)
-        sentence_to_subwords(opt.preprocessed_dataset_path, opt.subword_save_path,
-                             opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
-        generate_subword_labels(opt.subword_save_path, opt.labels_dest)
-        generate_subword_script(opt.subword_save_path, opt.new_path, opt.script_prefix, opt.labels_dest)
-
-    elif opt.output_unit == 'grapheme':
-        character_to_grapheme(opt.preprocessed_dataset_path, opt.grapheme_save_path)
-        generate_grapheme_labels(opt.grapheme_save_path, opt.labels_dest)
-        generate_grapheme_script(opt.grapheme_save_path, opt.new_path, opt.script_prefix, opt.labels_dest)
-
-    else:
-        raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
+    # Currently, Only support character preprocess
+    # elif opt.output_unit == 'subword':
+    #     if not opt.use_pretrain_kobert_tokenizer:
+    #         generate_sentencepiece_input(opt.preprocessed_dataset_path)
+    #         train_sentencepiece(opt.preprocessed_dataset_path, opt.vocab_size)
+    #     sentence_to_subwords(opt.preprocessed_dataset_path, opt.subword_save_path,
+    #                          opt.script_prefix, opt.use_pretrain_kobert_tokenizer)
+    #     generate_subword_labels(opt.subword_save_path, opt.labels_dest)
+    #     generate_subword_script(opt.subword_save_path, opt.new_path, opt.script_prefix, opt.labels_dest)
+    #
+    # elif opt.output_unit == 'grapheme':
+    #     character_to_grapheme(opt.preprocessed_dataset_path, opt.grapheme_save_path)
+    #     generate_grapheme_labels(opt.grapheme_save_path, opt.labels_dest)
+    #     generate_grapheme_script(opt.grapheme_save_path, opt.new_path, opt.script_prefix, opt.labels_dest)
+    #
+    # else:
+    #     raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
 
 
 if __name__ == '__main__':

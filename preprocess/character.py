@@ -27,30 +27,19 @@ def sentence_to_target(sentence, char2id):
     return "%s\n" % target[:-1]
 
 
-def generate_character_labels(dataset_path, labels_dest):
+def generate_character_labels(transcripts, labels_dest):
     print('create_char_labels started..')
 
     label_list = list()
     label_freq = list()
 
-    for folder in os.listdir(dataset_path):
-        if not folder.startswith('KsponSpeech'):
-            continue
-        # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-        path = os.path.join(dataset_path, folder)
-        for subfolder in os.listdir(path):
-            path = os.path.join(dataset_path, folder, subfolder)
-            for file in os.listdir(path):
-                if file.endswith('txt'):
-                    with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                        sentence = f.read()
-
-                        for ch in sentence:
-                            if ch not in label_list:
-                                label_list.append(ch)
-                                label_freq.append(1)
-                            else:
-                                label_freq[label_list.index(ch)] += 1
+    for transcript in transcripts:
+        for ch in transcript:
+            if ch not in label_list:
+                label_list.append(ch)
+                label_freq.append(1)
+            else:
+                label_freq[label_list.index(ch)] += 1
 
     # sort together Using zip
     label_freq, label_list = zip(*sorted(zip(label_freq, label_list), reverse=True))
@@ -66,13 +55,11 @@ def generate_character_labels(dataset_path, labels_dest):
     label_df.to_csv(os.path.join(labels_dest, "aihub_labels.csv"), encoding="utf-8", index=False)
 
 
-def generate_character_script(dataset_path, new_path, labels_dest):
+def generate_character_script(dataset_path, labels_dest):
     print('create_script started..')
     char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
-    with open(os.path.join(new_path, "transcripts.txt"), "w") as trans_file:
-        trans_file.write("%s\n" % dataset_path)
-
+    with open(os.path.join("transcripts.txt"), "w") as trans_file:
         for folder in os.listdir(dataset_path):
             if not folder.startswith('KsponSpeech'):
                 continue
@@ -86,5 +73,5 @@ def generate_character_script(dataset_path, new_path, labels_dest):
                             sentence = f.read()
 
                         transcript = sentence_to_target(sentence, char2id)
-                        line = "%s\t%s" % (os.path.join(folder, subfolder, file), transcript)
+                        line = "%s\t%s\t%s" % (os.path.join(folder, subfolder, file), sentence, transcript)
                         trans_file.write(line)
