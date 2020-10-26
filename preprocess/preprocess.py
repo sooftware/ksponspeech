@@ -34,55 +34,8 @@ def bracket_filter(sentence, mode='numeric_phonetic_others_spelling'):
             if ch != ')' and flag is True:
                 new_sentence += ch
 
-    elif mode == 'numeric_phonetic_otherwise_spelling':
-        isfront = False
-        front_bracket = False
-        back_bracket = False
-        skip = False
-
-        for idx, ch in enumerate(sentence):
-            if ch == '(':
-                if isfront:
-                    isfront = False
-                else:
-                    isfront = True
-
-                if isfront:
-                    if sentence[idx + 1].isnumeric():
-                        front_bracket = False
-                        back_bracket = True
-                        skip = True
-                    else:
-                        front_bracket = True
-                        back_bracket = False
-
-                if front_bracket and isfront:
-                    skip = False
-
-                elif front_bracket and not isfront:
-                    skip = True
-
-                elif back_bracket and isfront:
-                    skip = True
-
-                elif back_bracket and not isfront:
-                    skip = False
-
-            elif ch == ')':
-                if front_bracket and isfront:
-                    skip = True
-
-                elif front_bracket and not isfront:
-                    skip = False
-
-                elif back_bracket and isfront:
-                    skip = True
-
-                elif back_bracket and not isfront:
-                    skip = False
-
-            elif not skip:
-                new_sentence += ch
+    else:
+        raise ValueError("Unsupported mode : {0}".format(mode))
 
     return new_sentence
 
@@ -121,6 +74,8 @@ def sentence_filter(raw_sentence, mode, replace=None):
 
 def preprocess(dataset_path, mode='phonetic'):
     print('preprocess started..')
+
+    audio_paths = list()
     transcripts = list()
 
     percent_files = {
@@ -151,9 +106,10 @@ def preprocess(dataset_path, mode='phonetic'):
                         else:
                             new_sentence = sentence_filter(raw_sentence, mode=mode)
 
+                    audio_paths.append(os.path.join(folder, subfolder, file))
                     transcripts.append(new_sentence)
 
                 else:
                     continue
 
-    return transcripts
+    return audio_paths, transcripts

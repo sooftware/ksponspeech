@@ -24,7 +24,7 @@ def sentence_to_target(sentence, char2id):
     for ch in sentence:
         target += (str(char2id[ch]) + ' ')
 
-    return "%s\n" % target[:-1]
+    return target[:-1]
 
 
 def generate_character_labels(transcripts, labels_dest):
@@ -55,23 +55,12 @@ def generate_character_labels(transcripts, labels_dest):
     label_df.to_csv(os.path.join(labels_dest, "aihub_labels.csv"), encoding="utf-8", index=False)
 
 
-def generate_character_script(dataset_path, labels_dest):
+def generate_character_script(audio_paths, transcripts, labels_dest):
     print('create_script started..')
     char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
     with open(os.path.join("transcripts.txt"), "w") as trans_file:
-        for folder in os.listdir(dataset_path):
-            if not folder.startswith('KsponSpeech'):
-                continue
-            # folder : {KsponSpeech_01, ..., KsponSpeech_05}
-            path = os.path.join(dataset_path, folder)
-            for subfolder in os.listdir(path):
-                path = os.path.join(dataset_path, folder, subfolder)
-                for file in os.listdir(path):
-                    if file.endswith('.txt'):
-                        with open(os.path.join(path, file), "r", encoding='cp949') as f:
-                            sentence = f.read()
-
-                        transcript = sentence_to_target(sentence, char2id)
-                        line = "%s\t%s\t%s" % (os.path.join(folder, subfolder, file), sentence, transcript)
-                        trans_file.write(line)
+        for audio_path, transcript in zip(audio_paths, transcripts):
+            number_transcript = sentence_to_target(transcript, char2id)
+            line = "%s\t%s\t%s\n" % (audio_path, transcript, number_transcript)
+            trans_file.write(line)

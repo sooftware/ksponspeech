@@ -24,15 +24,6 @@ def _get_parser():
     parser.add_argument('--dataset_path', type=str,
                         default='E:/KsponSpeech/original',
                         help='path of original dataset')
-    parser.add_argument('--preprocessed_dataset_path', type=str,
-                        default='E:/KsponSpeech/preprocessed',
-                        help='path of preprocessed dataset')
-    parser.add_argument('--new_path', type=str,
-                        default='E:/KsponSpeech/character',
-                        help='new path to save')
-    parser.add_argument('--script_prefix', type=str,
-                        default='KsponScript_',
-                        help='script_prefix + FILENUM.txt : KsponScript_000001.txt')
     parser.add_argument('--labels_dest', type=str,
                         default='E:/KsponSpeech',
                         help='destination to save character / subword labels file')
@@ -43,8 +34,7 @@ def _get_parser():
                         default='numeric_phonetic_otherwise_spelling',
                         help='Ex) (70%)/(칠 십 퍼센트) 확률이라니 (뭐 뭔)/(모 몬) 소리야 진짜 (100%)/(백 프로)가 왜 안돼?'
                              'phonetic: 칠 십 퍼센트 확률이라니 모 몬 소리야 진짜 백 프로가 왜 안돼?'
-                             'spelling: 70% 확률이라니 뭐 뭔 소리야 진짜 100%가 왜 안돼?'
-                             'numeric_phonetic_otherwise_spelling: 칠 십 퍼센트 확률이라니 뭐 뭔 소리야 진짜 백 프로가 왜 안돼?')
+                             'spelling: 70% 확률이라니 뭐 뭔 소리야 진짜 100%가 왜 안돼?')
     parser.add_argument('--vocab_size', type=int,
                         default=5000,
                         help='size of vocab (default: 5000)')
@@ -63,9 +53,6 @@ def _get_parser():
 
 def log_info(opt):
     print("Dataset Path : %s" % opt.dataset_path)
-    print("Preprocessed Path : %s" % opt.preprocessed_dataset_path)
-    print("New Path : %s" % opt.new_path)
-    print("Script Prefix : %s" % opt.script_prefix)
     print("Labels Dest : %s" % opt.labels_dest)
     print("Output-Unit : %s" % opt.output_unit)
     print("Preprocess Mode : %s" % opt.preprocess_mode)
@@ -80,11 +67,11 @@ def main():
     opt = parser.parse_args()
     log_info(opt)
 
-    transcripts = preprocess(opt.dataset_path, opt.preprocess_mode)
+    audio_paths, transcripts = preprocess(opt.dataset_path, opt.preprocess_mode)
 
     if opt.output_unit == 'character':
         generate_character_labels(transcripts, opt.labels_dest)
-        generate_character_script(transcripts, opt.labels_dest)
+        generate_character_script(audio_paths, transcripts, opt.labels_dest)
 
     # Currently, Only support character preprocess
     # elif opt.output_unit == 'subword':
