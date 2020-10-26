@@ -62,5 +62,6 @@ def generate_character_script(audio_paths, transcripts, labels_dest):
     with open(os.path.join("transcripts.txt"), "w") as trans_file:
         for audio_path, transcript in zip(audio_paths, transcripts):
             number_transcript = sentence_to_target(transcript, char2id)
+            audio_path = audio_path.replace('txt', 'pcm')
             line = "%s\t%s\t%s\n" % (audio_path, transcript, number_transcript)
             trans_file.write(line)
