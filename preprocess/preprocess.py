@@ -2,7 +2,7 @@ import os
 import re
 
 
-def bracket_filter(sentence, mode='numeric_phonetic_others_spelling'):
+def bracket_filter(sentence, mode='phonetic'):
     new_sentence = str()
 
     if mode == 'phonetic':
