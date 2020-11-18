@@ -36,6 +36,8 @@ def sentence_to_grapheme(audio_paths, transcripts, vocab_dest: str = './data'):
     for transcript in transcripts:
         grapheme_transcripts.append(" ".join(unicodedata.normalize('NFKD', transcript)))
 
+    generate_grapheme_labels(grapheme_transcripts, vocab_dest)
+
     print('create_script started..')
     grpm2id, id2grpm = load_label(os.path.join(vocab_dest, "aihub_labels.csv"))
 
