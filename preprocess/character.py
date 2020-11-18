@@ -59,9 +59,8 @@ def generate_character_script(audio_paths, transcripts, labels_dest):
     print('create_script started..')
     char2id, id2char = load_label(os.path.join(labels_dest, "aihub_labels.csv"))
 
-    with open(os.path.join("transcripts.txt"), "w") as trans_file:
+    with open(os.path.join("transcripts.txt"), "w") as f:
         for audio_path, transcript in zip(audio_paths, transcripts):
-            number_transcript = sentence_to_target(transcript, char2id)
+            char_id_transcript = sentence_to_target(transcript, char2id)
             audio_path = audio_path.replace('txt', 'pcm')
-            line = "%s\t%s\t%s\n" % (audio_path, transcript, number_transcript)
-            trans_file.write(line)
+            f.write(f'{audio_path}\t{transcript}\t{char_id_transcript}\n')

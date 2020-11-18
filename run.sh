@@ -2,9 +2,7 @@
 # Soohwan Kim, Seyoung Bae, Cheolhwang Won, Soyoung Cho, Jeongwon Kwak
 
 DATASET_PATH="SET_YOUR_DATASET_PATH"
-LABELS_DEST='SET_LABELS_DESTINATION'
-GRAPHEME_SAVE_PATH='SET_YOUR_PATH_TO_SAVE_GRAPHME_TEXT'
-SUBWORD_SAVE_PATH='SET_YOUR_PATH_TO_SAVE_SUBWORD_TEXT'
+VOCAB_DEST='SET_LABELS_DESTINATION'
 OUTPUT_UNIT='character'                                          # you can set character / subword / grapheme
 PREPROCESS_MODE='phonetic'                                       # phonetic : 칠 십 퍼센트,  spelling : 70%
 VOCAB_SIZE=5000                                                  # if you use subword output unit, set vocab size
@@ -12,7 +10,9 @@ VOCAB_SIZE=5000                                                  # if you use su
 # if you want to use pretrain kober tokenizer refer https://github.com/SKTBrain/KoBERT
 # And release the bottom annotation.
 
-python main.py --dataset_path $DATASET_PATH --labels_dest $LABELS_DEST --output_unit $OUTPUT_UNIT \
+python main.py \
+--dataset_path $DATASET_PATH \
+--vocab_dest $VOCAB_DEST \
+--output_unit $OUTPUT_UNIT \
 --preprocess_mode $PREPROCESS_MODE \
---vocab_size $VOCAB_SIZE --grapheme_save_path $GRAPHEME_SAVE_PATH --subword_save_path $SUBWORD_SAVE_PATH \
-# --use_pretrain_kobert_tokenizer $USE_PRETRAIN_KOBERT_TOKENIZER
+--vocab_size $VOCAB_SIZE \
