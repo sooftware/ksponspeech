@@ -35,7 +35,7 @@ def sentence_to_subwords(audio_paths: list, transcripts: list, datapath: str = '
         for audio_path, transcript in zip(audio_paths, transcripts):
             audio_path = audio_path.replace('txt', 'pcm')
             subword_transcript = " ".join(sp.EncodeAsPieces(transcript))
-            subword_id_transcript = [str(item) for item in " ".join(sp.EncodeAsIds(transcript))]
+            subword_id_transcript = " ".join([str(item) for item in sp.EncodeAsIds(transcript)])
             f.write(f'{audio_path}\t{subword_transcript}\t{subword_id_transcript}\n')
 
     return subwords
