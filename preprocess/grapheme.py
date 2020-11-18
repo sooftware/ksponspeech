@@ -42,9 +42,9 @@ def sentence_to_grapheme(audio_paths, transcripts, vocab_dest: str = './data'):
     grpm2id, id2grpm = load_label(os.path.join(vocab_dest, "aihub_labels.csv"))
 
     with open(os.path.join(f"{vocab_dest}/transcripts.txt"), "w") as f:
-        for audio_path, transcript in zip(audio_paths, transcripts):
+        for audio_path, transcript, grapheme_transcript in zip(audio_paths, transcripts, grapheme_transcripts):
             audio_path = audio_path.replace('txt', 'pcm')
-            grpm_id_transcript = sentence_to_target(transcript, grpm2id)
+            grpm_id_transcript = sentence_to_target(grapheme_transcript, grpm2id)
             f.write(f'{audio_path}\t{transcript}\t{grpm_id_transcript}\n')
 
 
@@ -68,9 +68,9 @@ def generate_grapheme_labels(grapheme_transcripts, vocab_dest: str = './data'):
         'freq': [0, 0, 0]
     }
 
-    for idx, (ch, freq) in enumerate(zip(vocab_list, vocab_freq)):
+    for idx, (grpm, freq) in enumerate(zip(vocab_list, vocab_freq)):
         vocab_dict['id'].append(idx + 3)
-        vocab_dict['grpm'].append(ch)
+        vocab_dict['grpm'].append(grpm)
         vocab_dict['freq'].append(freq)
 
     label_df = pd.DataFrame(vocab_dict)
