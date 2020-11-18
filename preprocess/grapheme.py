@@ -44,7 +44,7 @@ def sentence_to_grapheme(audio_paths, transcripts, vocab_dest: str = './data'):
     with open(os.path.join(f"{vocab_dest}/transcripts.txt"), "w") as f:
         for audio_path, transcript, grapheme_transcript in zip(audio_paths, transcripts, grapheme_transcripts):
             audio_path = audio_path.replace('txt', 'pcm')
-            grpm_id_transcript = sentence_to_target(grapheme_transcript, grpm2id)
+            grpm_id_transcript = sentence_to_target(grapheme_transcript.split(), grpm2id)
             f.write(f'{audio_path}\t{transcript}\t{grpm_id_transcript}\n')
 
 
