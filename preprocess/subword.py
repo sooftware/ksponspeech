@@ -10,6 +10,7 @@ def train_sentencepiece(transcripts, datapath: str = './data', vocab_size: int =
 
     with open(f'{datapath}/sentencepiece_input.txt', 'w') as f:
         for transcript in transcripts:
+            transcript = transcript.upper()
             f.write(f'{transcript}\n')
 
     spm.SentencePieceTrainer.Train(

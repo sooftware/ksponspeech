@@ -34,7 +34,7 @@ def sentence_to_grapheme(audio_paths, transcripts, vocab_dest: str = './data'):
         os.mkdir(vocab_dest)
 
     for transcript in transcripts:
-        grapheme_transcripts.append(" ".join(unicodedata.normalize('NFKD', transcript)))
+        grapheme_transcripts.append(" ".join(unicodedata.normalize('NFKD', transcript)).upper())
 
     generate_grapheme_labels(grapheme_transcripts, vocab_dest)
 
