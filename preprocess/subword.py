@@ -20,6 +20,9 @@ def train_sentencepiece(transcripts, datapath: str = './data', vocab_size: int =
         '--model_type=bpe '
         '--max_sentence_length=9999 '
         '--hard_vocab_limit=false'
+        '--pad_id=0'
+        '--bos_id=1'
+        '--eos_id=2'
     )
 
 
