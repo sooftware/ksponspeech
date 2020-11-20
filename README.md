@@ -61,10 +61,6 @@ b/ (70%)/(칠 십 퍼센트) 확률이라니 아/ (뭐+ 뭔)/(모+ 몬) 소리�
 ```
 70% 확률이라니 아 뭐 뭔 소리야 진짜 100%가 왜 안돼?
 ```
-* Option3 : numeric_phonetic_otherwise_spelling
-```
-칠 십 퍼센트 확률이라니 아 뭐 뭔 소리야 진짜 백 프로가 왜 안돼?
-```
   
 ## Output-Unit
    
@@ -106,9 +102,7 @@ I appreciate any kind of feedback or contribution.  Feel free to proceed with sm
   
 ## Reference
   
-* [KoBert](https://github.com/SKTBrain/KoBERT)  
-* [Sentencepiece](https://github.com/google/sentencepiece)  
-* [hgtk](https://github.com/bluedisk/hangul-toolkit)  
+* [Sentencepiece](https://github.com/google/sentencepiece)   
   
 ## Author
 * [Soohwan Kim](https://github.com/sooftware), [Seyoung Bae](https://github.com/triplet02),  [Cheolhwang Won](https://github.com/wch18735), [Soyoung Cho](https://github.com/SoYoungCho), [Jeongwon Kwak](https://github.com/jeongwonkwak)
