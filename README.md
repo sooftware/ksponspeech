@@ -20,6 +20,10 @@ We will explain the details in the **Output-Unit** part below.
   
 1. Set options in [run.sh](https://github.com/sooftware/KsponSpeech-preprocess/blob/master/run.sh)  
   
+```
+python main.py --dataset_path $DATASET_PATH --vocab_dest $VOCAB_DEST --output_unit $OUTPUT_UNIT --preprocess_mode $PREPROCESS_MODE --vocab_size $VOCAB_SIZE
+```
+  
 2. Run [run.sh](https://github.com/sooftware/KsponSpeech-preprocess/blob/master/run.sh)  
 ```shell
 $ ./run.sh
@@ -75,7 +79,7 @@ This project provides processing in characters, subwords, and grapheme units.
 ㅇㅏ ㅁㅗ ㅁㅗㄴ ㅅㅗㄹㅣㅇㅑ ㅊㅣㄹ ㅅㅣㅂ ㅍㅓㅅㅔㄴㅌㅡ ㅎㅘㄱㄹㅠㄹㅇㅣㄹㅏㄴㅣ
 ```
    
-## Conversion to id
+## Conversion to Numeric id
   
 * transcript
 ```
@@ -93,10 +97,6 @@ If you have any questions, bug reports, and feature requests, please [open an is
 For live discussions, please go to our [gitter](https://gitter.im/Korean-Speech-Recognition/community) or Contacts sh951011@gmail.com please.  
   
 I appreciate any kind of feedback or contribution.  Feel free to proceed with small issues like bug fixes, documentation improvement.  For major contributions and new features, please discuss with the collaborators in corresponding issues.  
-  
-## Reference
-  
-* [Sentencepiece](https://github.com/google/sentencepiece)   
   
 ## Author
 * [Soohwan Kim](https://github.com/sooftware), [Seyoung Bae](https://github.com/triplet02),  [Cheolhwang Won](https://github.com/wch18735), [Soyoung Cho](https://github.com/SoYoungCho), [Jeongwon Kwak](https://github.com/jeongwonkwak)
