@@ -6,7 +6,7 @@ from preprocess.subword import train_sentencepiece, sentence_to_subwords
 
 
 def _get_parser():
-    """ Get arguments parser """
+    ''' Get arguments parser '''
     parser = argparse.ArgumentParser(description='KsponSpeech Preprocess')
     parser.add_argument('--dataset_path', type=str,
                         default='E:/KsponSpeech/original',
@@ -33,11 +33,11 @@ def _get_parser():
 
 
 def log_info(opt):
-    print("Dataset Path : %s" % opt.dataset_path)
-    print("Vocab Destination : %s" % opt.vocab_dest)
-    print("Save Path : %s" % opt.save_path)
-    print("Output-Unit : %s" % opt.output_unit)
-    print("Preprocess Mode : %s" % opt.preprocess_mode)
+    print('Dataset Path : %s' % opt.dataset_path)
+    print('Vocab Destination : %s' % opt.vocab_dest)
+    print('Save Path : %s' % opt.save_path)
+    print('Output-Unit : %s' % opt.output_unit)
+    print('Preprocess Mode : %s' % opt.preprocess_mode)
 
 
 def main():
@@ -59,7 +59,7 @@ def main():
         sentence_to_grapheme(audio_paths, transcripts, opt.vocab_dest)
 
     else:
-        raise ValueError("Unsupported preprocess method : {0}".format(opt.output_unit))
+        raise ValueError('Unsupported preprocess method : {0}'.format(opt.output_unit))
 
 
 if __name__ == '__main__':
