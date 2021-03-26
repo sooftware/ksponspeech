@@ -3,3 +3,4 @@ gluonnlp
 sentencepiece
 hgtk
 pandas
+joblib
