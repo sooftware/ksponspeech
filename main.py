@@ -17,7 +17,7 @@ def _get_parser():
     parser.add_argument('--output_unit', type=str,
                         default='character',
                         help='character or subword or grapheme')
-    parser.add_argument('--savepath', type=str,
+    parser.add_argument('--save_path', type=str,
                         default='./data',
                         help='path of data')
     parser.add_argument('--preprocess_mode', type=str,
@@ -35,7 +35,7 @@ def _get_parser():
 def log_info(opt):
     print("Dataset Path : %s" % opt.dataset_path)
     print("Vocab Destination : %s" % opt.vocab_dest)
-    print("Save Path : %s" % opt.savepath)
+    print("Save Path : %s" % opt.save_path)
     print("Output-Unit : %s" % opt.output_unit)
     print("Preprocess Mode : %s" % opt.preprocess_mode)
 
@@ -49,11 +49,11 @@ def main():
 
     if opt.output_unit == 'character':
         generate_character_labels(transcripts, opt.vocab_dest)
-        generate_character_script(audio_paths, transcripts, opt.vocab_dest)
+        generate_character_script(audio_paths, transcripts, opt.vocab_dest, opt.save_path)
 
     elif opt.output_unit == 'subword':
-        train_sentencepiece(transcripts, opt.savepath, opt.vocab_size)
-        sentence_to_subwords(audio_paths, transcripts, opt.savepath)
+        train_sentencepiece(transcripts, opt.save_path, opt.vocab_size)
+        sentence_to_subwords(audio_paths, transcripts, opt.save_path)
 
     elif opt.output_unit == 'grapheme':
         sentence_to_grapheme(audio_paths, transcripts, opt.vocab_dest)
