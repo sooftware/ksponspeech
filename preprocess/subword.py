@@ -1,7 +1,5 @@
 import os
 import sentencepiece as spm
-from joblib import Parallel, delayed, cpu_count
-from tqdm import tqdm
 
 
 def train_sentencepiece(transcripts, datapath: str = './data', vocab_size: int = 5000):
@@ -10,57 +8,39 @@ def train_sentencepiece(transcripts, datapath: str = './data', vocab_size: int =
     if not os.path.exists(datapath):
         os.mkdir(datapath)
 
-    with open(f'{datapath}/sentencepiece_input.txt', 'w') as f:
+    with open(f'{datapath}/sentencepiece_input.txt', 'w', encoding="utf-8") as f:
         for transcript in transcripts:
             transcript = transcript.upper()
             f.write(f'{transcript}\n')
 
     spm.SentencePieceTrainer.Train(
-        f'--input={datapath}/sentencepiece_input.txt '
-        '--model_prefix=kspon_sentencepiece '
+        f"--input={datapath}/sentencepiece_input.txt "
+        f"--model_prefix=sp "
         f'--vocab_size={vocab_size} '
-        '--model_type=bpe '
-        '--max_sentence_length=9999 '
-        '--hard_vocab_limit=false '
-        '--pad_id=0 '
-        '--bos_id=1 '
-        '--eos_id=2 '
-        '--unk_id=3 '
+        f"--model_type={SENTENCEPIECE_MODEL_TYPE} "
+        f"--pad_id=0 "
+        f"--bos_id=1 "
+        f"--eos_id=2 "
+        f"--unk_id=3 "
+        f"--user_defined_symbols={blank_token}"
     )
 
 
-def do_subword_process(transcript: str, instance: spm.SentencePieceProcessor):
-    pieces = instance.EncodeAsPieces(transcript)
-    ids = instance.PieceToId(pieces)
-    return pieces, ids
+def convert_subword(transcript: str, sp: spm.SentencePieceProcessor):
+    text = " ".join(sp.EncodeAsPieces(transcript))
+    label = " ".join([str(sp.PieceToId(token)) for token in text])
+    return text, label
 
 
-def sentence_to_subwords(audio_paths: list, transcripts: list, datapath: str = './data',
-                         batch_step: int = 256):
-    subwords = list()
-
-    print('sentence_to_subwords...')
-
+def sentence_to_subwords(
+        audio_paths: list,
+        transcripts: list,
+        manifest_file_path: str,
+) -> None:
     sp = spm.SentencePieceProcessor()
-    vocab_file = "kspon_sentencepiece.model"
-    sp.load(vocab_file)
+    sp.Load("sp.model")
 
-    with Parallel(n_jobs=cpu_count() - 1) as parallel:
-        with open(f'{datapath}/transcripts.txt', 'w') as f:
-            for batch_idx in tqdm(range(0, len(audio_paths), batch_step), desc='Subword Process...'):
-                audio_paths_subset = audio_paths[batch_idx * batch_step: (batch_idx + 1) * batch_step]
-                transcripts_subset = transcripts[batch_idx * batch_step: (batch_idx + 1) * batch_step]
-
-                results_subset = parallel(
-                    delayed(do_subword_process)(transcript, sp) for transcript in transcripts_subset
-                )
-
-                subset_results = []
-                for audio_path, (subword_transcript, subword_id) in zip(audio_paths_subset, results_subset):
-                    subword_transcript = ' '.join(subword_transcript)
-                    subword_id = ' '.join(list(map(str, subword_id)))
-                    subset_results.append(f'{audio_path}\t{subword_transcript}\t{subword_id}')
-
-                f.write('\n'.join(subset_results)+'\n')
-
-    return subwords
+    with open(manifest_file_path, 'w', encoding="utf-8") as f:
+        for audio_path, transcript in zip(audio_paths, transcripts):
+            text, label = convert_subword(transcript, sp)
+            f.write(f"{audio_path}\t{text}\t{label}\n")
