@@ -1,5 +1,5 @@
 # KsponSpeech
-#### Pre-processing KsponSpeech corpus priveded by AI Hub
+#### Pre-processing KsponSpeech corpus provided by AI Hub
    
 It's been a while since [KsponSpeech](https://www.mdpi.com/2076-3417/10/19/6936) was released, but it's hard to compare performance because there's no established preprocessing method. So we're revealing the pre-processing method we used in the [KoSpeech](https://github.com/sooftware/KoSpeech) project. This project provides processing in characters, subwords, and grapheme units.    
   
@@ -29,7 +29,7 @@ python main.py --dataset_path $DATASET_PATH --vocab_dest $VOCAB_DEST --output_un
 $ ./run.sh
 ```
   
-3. Leave the computer for hours.  
+3. Leave the computer running for hours.  
    
 ## Preprocess
   
